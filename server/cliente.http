@@ -23,7 +23,7 @@ Content-Type: application/json
   "nome": "Fabiano",
   "email": "emerson.nascimento@example.com",
   "telefone": "77981111111",
-  "planoId": "112a24e3-323c-4395-9d63-c91f103e0a5d",
+  "planoId": "a52d6c43-01e6-4d89-b10d-96c2e77b0162",
   "pesoTotal": 5.5,
   "dispositivos": {
     "celulares": 2,
@@ -31,6 +31,6 @@ Content-Type: application/json
     "smartTvs": 1,
     "tvBox": 4,
     "outros": 2,
-    "gamer": false
+    "gamer": true
   }
 }
