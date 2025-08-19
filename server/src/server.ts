@@ -3,6 +3,7 @@ import fastify from "fastify";
 import { serializerCompiler, validatorCompiler, type ZodTypeProvider } from "fastify-type-provider-zod";
 import { env } from "./env.ts";
 import { calcularPlano } from "./routes/calcular-plano.ts";
+import { criarVenda } from "./routes/criar-venda.ts";
 
 // Inicializa a aplicação Fastify com suporte ao Zod para validação de tipos
 const app = fastify().withTypeProvider<ZodTypeProvider>();
@@ -24,6 +25,9 @@ app.get("/health", async () => {
 
 // Registra a rota de cálculo de plano
 app.register(calcularPlano);
+
+// Registra a rota de criação de venda
+app.register(criarVenda);
 
 // Inicia o servidor
 app.listen({ port: env.PORT }).then(() => {

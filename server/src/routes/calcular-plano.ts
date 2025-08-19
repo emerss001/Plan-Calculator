@@ -1,20 +1,14 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
 import db from "../../lib/prisma-cliente.ts";
+import { calcularPlanoRequisição } from "../../types/calcular-plano-requisição.ts";
 
 export const calcularPlano: FastifyPluginAsyncZod = async (app) => {
     app.post(
         "/calcular-plano",
         {
             schema: {
-                body: z.object({
-                    celulares: z.coerce.number(),
-                    computadores: z.coerce.number(),
-                    smartTvs: z.coerce.number(),
-                    tvBox: z.coerce.number(),
-                    outros: z.coerce.number(),
-                    gamer: z.boolean(),
-                }),
+                body: calcularPlanoRequisição,
             },
         },
         async (request) => {
