@@ -1,0 +1,17 @@
+# Variáveis
+@baseUrl = http://localhost:3000
+
+## Calcular plano recomendado
+
+
+POST {{baseUrl}}/calcular-plano
+Content-Type: application/json
+
+{
+  "celulares": 2,
+  "computadores": 1,
+  "smartTvs": 1,
+  "tvBox": 0,
+  "outros": 2,
+  "gamer": true
+}
