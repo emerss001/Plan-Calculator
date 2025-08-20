@@ -2,10 +2,11 @@ import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import {} from "@fastify/multipart";
 import z from "zod";
 import XLSX from "xlsx";
-import { excelRowSchema } from "../../types/excelRowSchema.ts";
+import { excelRowSchema } from "../../types/excel-row-schema.ts";
 import db from "../../lib/prisma-cliente.ts";
+import { calculeOfPlan } from "../../utils/calculate-weight-of-plan.ts";
 
-export const uploadVendas: FastifyPluginAsyncZod = async (app) => {
+export const uploadSalesRoute: FastifyPluginAsyncZod = async (app) => {
     app.post("/upload-vendas", async (request, reply) => {
         try {
             const file = await request.file();
@@ -33,54 +34,54 @@ export const uploadVendas: FastifyPluginAsyncZod = async (app) => {
                     const validatedRow = excelRowSchema.parse(rawRow);
 
                     // Calcular peso total
-                    let pesoTotal =
-                        validatedRow.Celulares * 0.8 +
-                        validatedRow.Computadores * 0.5 +
-                        validatedRow["Smart TV"] * 0.4 +
-                        validatedRow["Tv box"] * 0.6 +
-                        validatedRow["Outros dispositivos"] * 0.1;
+                    const weightTotalCalculated = calculeOfPlan({
+                        computers: validatedRow.Computadores,
+                        phones: validatedRow.Celulares,
+                        smartTvs: validatedRow["Smart TV"],
+                        tvBox: validatedRow["Tv box"],
+                        others: validatedRow["Outros dispositivos"],
+                        gamer: validatedRow["Cliente Gamer"],
+                    });
 
-                    if (validatedRow["Cliente Gamer"]) pesoTotal = pesoTotal * 2;
-
-                    const planoRecomendado = await db.plano.findFirst({
+                    const planRecommended = await db.plan.findFirst({
                         where: {
-                            peso_min: { lte: pesoTotal },
-                            OR: [{ peso_max: { gte: pesoTotal } }, { peso_max: null }],
+                            weightMin: { lte: weightTotalCalculated },
+                            OR: [{ weightMax: { gte: weightTotalCalculated } }, { weightMax: null }],
                         },
                     });
 
-                    if (!planoRecomendado) {
+                    if (!planRecommended) {
                         throw new Error("Nenhum plano encontrado para o peso calculado");
                     }
 
                     // Verificar se cliente já existe ou criar um novo
-                    let cliente = await db.cliente.findUnique({
+                    let cliente = await db.client.findUnique({
                         where: { email: validatedRow["E-mail"] },
                     });
 
                     if (!cliente && validatedRow["E-mail"]) {
-                        cliente = await db.cliente.create({
+                        cliente = await db.client.create({
                             data: {
-                                nome: validatedRow.nome,
+                                name: validatedRow.nome,
                                 email: validatedRow["E-mail"],
-                                telefone: validatedRow.telefone || "",
+                                telephone: validatedRow.telefone || "",
                             },
                         });
                     }
 
                     if (!cliente) return reply.status(400).send({ error: "Cliente não encontrado ou criado" });
 
-                    await db.venda.create({
+                    await db.sale.create({
                         data: {
-                            cliente_id: cliente.id,
-                            plano_id: planoRecomendado.id,
+                            clientId: cliente.id,
+                            planId: planRecommended.id,
                             gamer: validatedRow["Cliente Gamer"],
-                            celulares: validatedRow.Celulares,
-                            computadores: validatedRow.Computadores,
-                            smart_tvs: validatedRow["Smart TV"],
-                            tv_box: validatedRow["Tv box"],
-                            outros: validatedRow["Outros dispositivos"],
-                            peso_total: pesoTotal,
+                            phones: validatedRow.Celulares,
+                            computers: validatedRow.Computadores,
+                            smartTvs: validatedRow["Smart TV"],
+                            tvBox: validatedRow["Tv box"],
+                            others: validatedRow["Outros dispositivos"],
+                            weightTotal: weightTotalCalculated,
                         },
                     });
 

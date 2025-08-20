@@ -3,7 +3,7 @@ import z from "zod";
 
 export const excelRowSchema = z.object({
     nome: z.string().min(1, "Nome é obrigatório"),
-    "E-mail": z.string().email("Email inválido").optional(),
+    "E-mail": z.string().optional(),
     telefone: z.string().optional(),
     Celulares: z.coerce.number().min(0).default(0),
     Computadores: z.coerce.number().min(0).default(0),

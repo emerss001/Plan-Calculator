@@ -2,10 +2,10 @@ import fastifyCors from "@fastify/cors";
 import fastify from "fastify";
 import { serializerCompiler, validatorCompiler, type ZodTypeProvider } from "fastify-type-provider-zod";
 import { env } from "./env.ts";
-import { calcularPlano } from "./routes/calcular-plano.ts";
-import { criarVenda } from "./routes/criar-venda.ts";
-import { uploadVendas } from "./routes/upload-vendas.ts";
+import { calculePlanRoute } from "./routes/calculate-plan-route.ts";
 import fastifyMultipart from "@fastify/multipart";
+import { createSaleRoute } from "./routes/create-sale-route.ts";
+import { uploadSalesRoute } from "./routes/upload-sales-route.ts";
 
 // Inicializa a aplicação Fastify com suporte ao Zod para validação de tipos
 const app = fastify().withTypeProvider<ZodTypeProvider>();
@@ -28,12 +28,12 @@ app.get("/health", async () => {
 });
 
 // Registra a rota de cálculo de plano
-app.register(calcularPlano);
+app.register(calculePlanRoute);
 
 // Registra a rota de criação de venda
-app.register(criarVenda);
+app.register(createSaleRoute);
 
-app.register(uploadVendas);
+app.register(uploadSalesRoute);
 
 // Inicia o servidor
 app.listen({ port: env.PORT }).then(() => {
