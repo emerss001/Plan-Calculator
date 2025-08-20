@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { calculeOfPlan } from "../utils/calculate-weight-of-plan.ts";
 import db from "../lib/prisma-cliente.ts";
+import { createHashPassword } from "../utils/create-hash-password.ts";
 
 const prisma = new PrismaClient();
 
@@ -14,6 +15,14 @@ type SaleDevices = {
 };
 
 async function main() {
+    // Limpa todas as tabelas antes de inserir os dados
+    console.log("limpando tudo o que tem no banco de dados");
+    await Promise.all([
+        prisma.sale.deleteMany({}),
+        prisma.client.deleteMany({}),
+        prisma.plan.deleteMany({}),
+        prisma.admin.deleteMany({}),
+    ]);
     // cria os planos iniciais
     await prisma.plan.createMany({
         data: [
@@ -123,7 +132,7 @@ async function main() {
             data: [
                 {
                     clientId: clients[clientsIndex > 1 ? 1 : 0].id,
-                    PlanId: planRecommendedId?.id!,
+                    planId: planRecommendedId?.id!,
                     computers: sale.computers,
                     phones: sale.phones,
                     smartTvs: sale.smartTvs,
@@ -138,7 +147,7 @@ async function main() {
     await prisma.admin.create({
         data: {
             username: "admin",
-            password: "desafio.",
+            password: await createHashPassword("desafio"),
         },
     });
 }

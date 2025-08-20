@@ -1,17 +1,29 @@
 # Variáveis
 @baseUrl = http://localhost:3000
 
+### Login
+
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "desafio"
+}
+
+###
+
 ## Calcular plano recomendado
 POST {{baseUrl}}/calcular-plano
 Content-Type: application/json
 
 {
-  "celulares": 2,
-  "computadores": 1,
-  "smartTvs": 1,
-  "tvBox": 0,
-  "outros": 2,
-  "gamer": true
+    "phones": 4,
+    "computers": 2,
+    "smartTvs": 2,
+    "tvBox": 0,
+    "others": 3,
+    "gamer": true
 }
 
 ###
@@ -33,4 +45,13 @@ Content-Type: application/json
     "outros": 2,
     "gamer": true
   }
+}
+
+###
+
+POST {{baseUrl}}/upload-vendas
+Content-Type: multipart/form-data
+
+{
+  "file": "../dados_fake_clientes_opcional.xlsx"
 }

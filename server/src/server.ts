@@ -6,9 +6,14 @@ import { calculePlanRoute } from "./routes/calculate-plan-route.ts";
 import fastifyMultipart from "@fastify/multipart";
 import { createSaleRoute } from "./routes/create-sale-route.ts";
 import { uploadSalesRoute } from "./routes/upload-sales-route.ts";
+import { jwtPlugin } from "../lib/jwt.ts";
+import { loginRoute } from "./routes/login-route.ts";
 
 // Inicializa a aplicação Fastify com suporte ao Zod para validação de tipos
 const app = fastify().withTypeProvider<ZodTypeProvider>();
+
+// Registra o plugin JWT para autenticação
+jwtPlugin(app);
 
 // Configura o CORS permitindo acesso do frontend local
 app.register(fastifyCors, {
@@ -16,6 +21,7 @@ app.register(fastifyCors, {
     origin: "*",
 });
 
+// Registra o plugin de upload de arquivos
 app.register(fastifyMultipart);
 
 // Define os compiladores de validação e serialização usando Zod
@@ -27,12 +33,10 @@ app.get("/health", async () => {
     return { status: "ok" };
 });
 
-// Registra a rota de cálculo de plano
+// Definição das rotas da aplicação
+app.register(loginRoute);
 app.register(calculePlanRoute);
-
-// Registra a rota de criação de venda
 app.register(createSaleRoute);
-
 app.register(uploadSalesRoute);
 
 // Inicia o servidor

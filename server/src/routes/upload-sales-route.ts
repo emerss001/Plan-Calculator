@@ -7,7 +7,7 @@ import db from "../../lib/prisma-cliente.ts";
 import { calculeOfPlan } from "../../utils/calculate-weight-of-plan.ts";
 
 export const uploadSalesRoute: FastifyPluginAsyncZod = async (app) => {
-    app.post("/upload-vendas", async (request, reply) => {
+    app.post("/upload-vendas", { onRequest: [(app as any).authenticate] }, async (request, reply) => {
         try {
             const file = await request.file();
 
