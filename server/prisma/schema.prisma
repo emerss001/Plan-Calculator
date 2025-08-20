@@ -13,7 +13,7 @@ model Cliente {
   email    String @unique
   telefone String @unique
 
-  Venda Venda?
+  Venda Venda[]
 }
 
 model Plano {
@@ -30,7 +30,7 @@ model Plano {
 model Venda {
   id           String   @id @default(uuid())
   cliente_id   String   @unique
-  plano_id     String   @unique
+  plano_id     String  
   data_venda   DateTime @default(now())
   gamer        Boolean  @default(false)
   celulares    Int

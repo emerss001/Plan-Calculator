@@ -4,6 +4,8 @@ import { serializerCompiler, validatorCompiler, type ZodTypeProvider } from "fas
 import { env } from "./env.ts";
 import { calcularPlano } from "./routes/calcular-plano.ts";
 import { criarVenda } from "./routes/criar-venda.ts";
+import { uploadVendas } from "./routes/upload-vendas.ts";
+import fastifyMultipart from "@fastify/multipart";
 
 // Inicializa a aplicação Fastify com suporte ao Zod para validação de tipos
 const app = fastify().withTypeProvider<ZodTypeProvider>();
@@ -13,6 +15,8 @@ app.register(fastifyCors, {
     // origin: "http://localhost:3001",
     origin: "*",
 });
+
+app.register(fastifyMultipart);
 
 // Define os compiladores de validação e serialização usando Zod
 app.setSerializerCompiler(serializerCompiler);
@@ -28,6 +32,8 @@ app.register(calcularPlano);
 
 // Registra a rota de criação de venda
 app.register(criarVenda);
+
+app.register(uploadVendas);
 
 // Inicia o servidor
 app.listen({ port: env.PORT }).then(() => {
