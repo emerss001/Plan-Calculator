@@ -1,45 +1,145 @@
 import { PrismaClient } from "@prisma/client";
+import { calculeOfPlan } from "../utils/calculate-weight-of-plan.ts";
+import db from "../lib/prisma-cliente.ts";
 
 const prisma = new PrismaClient();
 
+type SaleDevices = {
+    computers: number;
+    phones: number;
+    smartTvs: number;
+    tvBox: number;
+    others: number;
+    gamer: boolean;
+};
+
 async function main() {
     // cria os planos iniciais
-    await prisma.plano.createMany({
+    await prisma.plan.createMany({
         data: [
             {
-                nome: "Prata",
-                preco: 50.0,
-                velocidade_mbps: 100,
-                peso_min: 0.0,
-                peso_max: 0.99,
+                name: "Prata",
+                price: 50.0,
+                speed_mbps: 100,
+                weightMin: 0.0,
+                weightMax: 0.99,
                 description: "Ideal para navegação e streaming em HD.",
             },
             {
-                nome: "Bronze",
-                preco: 80.0,
-                velocidade_mbps: 300,
-                peso_min: 1.0,
-                peso_max: 2.0,
+                name: "Bronze",
+                price: 80.0,
+                speed_mbps: 300,
+                weightMin: 1.0,
+                weightMax: 2.0,
                 description: "Perfeito para gamers e streaming em 4K.",
             },
 
             {
-                nome: "Ouro",
-                preco: 100.0,
-                velocidade_mbps: 500,
-                peso_min: 2.01,
-                peso_max: 2.99,
+                name: "Ouro",
+                price: 100.0,
+                speed_mbps: 500,
+                weightMin: 2.01,
+                weightMax: 2.99,
                 description: "Excelente para famílias com múltiplos dispositivos.",
             },
             {
-                nome: "Diamante",
-                preco: 130.0,
-                velocidade_mbps: 800,
-                peso_min: 3.0,
-                peso_max: null,
+                name: "Diamante",
+                price: 130.0,
+                speed_mbps: 800,
+                weightMin: 3.0,
+                weightMax: null,
                 description: "Excelente para famílias com múltiplos dispositivos.",
             },
         ],
+    });
+
+    await prisma.client.createMany({
+        data: [
+            {
+                name: "João Pereira Silva",
+                email: "joaopepe@gmail.com",
+                telephone: "77981818181",
+            },
+            {
+                name: "Mariana Souza Neves",
+                email: "Mari.neves@outlook.com",
+                telephone: "77998523014",
+            },
+        ],
+    });
+
+    const clients = await prisma.client.findMany({
+        where: {
+            email: { in: ["joaopepe@gmail.com", "Mari.neves@outlook.com"] },
+        },
+    });
+
+    const sales: SaleDevices[] = [
+        {
+            computers: 2,
+            phones: 4,
+            smartTvs: 2,
+            tvBox: 0,
+            others: 3,
+            gamer: true,
+        },
+        {
+            computers: 1,
+            phones: 2,
+            smartTvs: 1,
+            tvBox: 1,
+            others: 2,
+            gamer: false,
+        },
+        {
+            computers: 1,
+            phones: 2,
+            smartTvs: 1,
+            tvBox: 0,
+            others: 3,
+            gamer: true,
+        },
+        {
+            computers: 2,
+            phones: 2,
+            smartTvs: 2,
+            tvBox: 1,
+            others: 3,
+            gamer: false,
+        },
+    ];
+
+    for (const sale of sales) {
+        const clientsIndex = sales.indexOf(sale);
+        const weightTotalCalculated = calculeOfPlan(sale);
+        const planRecommendedId = await db.plan.findFirst({
+            where: {
+                weightMin: { lte: weightTotalCalculated },
+                OR: [{ weightMax: { gte: weightTotalCalculated } }, { weightMax: null }],
+            },
+        });
+
+        await prisma.sale.createMany({
+            data: [
+                {
+                    clientId: clients[clientsIndex > 1 ? 1 : 0].id,
+                    PlanId: planRecommendedId?.id!,
+                    computers: sale.computers,
+                    phones: sale.phones,
+                    smartTvs: sale.smartTvs,
+                    tvBox: sale.tvBox,
+                    others: sale.others,
+                    weightTotal: weightTotalCalculated,
+                },
+            ],
+        });
+    }
+
+    await prisma.admin.create({
+        data: {
+            username: "admin",
+            password: "desafio.",
+        },
     });
 }
 

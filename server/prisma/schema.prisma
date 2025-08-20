@@ -7,41 +7,41 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Cliente {
-  id       String @id @default(uuid())
-  nome     String
-  email    String @unique
-  telefone String @unique
+model Client {
+  id        String @id @default(uuid())
+  name      String
+  email     String @unique
+  telephone String @unique
 
-  Venda Venda[]
+  Sale Sale[]
 }
 
-model Plano {
-  id              String  @id @default(uuid())
-  nome            String
-  preco           Decimal @db.Decimal(10, 2)
-  description     String
-  velocidade_mbps Int
-  peso_min        Float
-  peso_max        Float?
-  Venda           Venda[]
+model Plan {
+  id          String  @id @default(uuid())
+  name        String
+  price       Decimal @db.Decimal(10, 2)
+  description String
+  speed_mbps  Int
+  weightMin   Float
+  weightMax   Float?
+  Sale        Sale[]
 }
 
-model Venda {
-  id           String   @id @default(uuid())
-  cliente_id   String   @unique
-  plano_id     String  
-  data_venda   DateTime @default(now())
-  gamer        Boolean  @default(false)
-  celulares    Int
-  computadores Int
-  smart_tvs    Int
-  tv_box       Int
-  outros       Int
-  peso_total   Float
+model Sale {
+  id          String   @id @default(uuid())
+  clientId    String  
+  planId      String
+  createdAt   DateTime @default(now())
+  gamer       Boolean  @default(false)
+  phones      Int
+  computers   Int
+  smartTvs    Int
+  tvBox       Int
+  others      Int
+  weightTotal Float
 
-  Cliente Cliente @relation(fields: [cliente_id], references: [id], onDelete: Cascade)
-  Plano   Plano   @relation(fields: [plano_id], references: [id], onDelete: Cascade)
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
 }
 
 model Admin {
