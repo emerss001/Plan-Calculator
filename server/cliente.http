@@ -55,3 +55,9 @@ Content-Type: multipart/form-data
 {
   "file": "../dados_fake_clientes_opcional.xlsx"
 }
+
+###
+
+GET {{baseUrl}}/admin/vendas
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ4MjNmZjVhLTMxYjEtNGViZC1iZmUwLTFhZTc2ZmJiNDhhMCIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTU3MDA5NDEsImV4cCI6MTc1NTcwNDU0MX0.ssTRLD41-qaVH4AnP_LOvE4ZzfvKnVa8sRfaitJzvG0
+Content-Type: application/json

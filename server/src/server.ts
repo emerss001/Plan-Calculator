@@ -8,6 +8,7 @@ import { createSaleRoute } from "./routes/create-sale-route.ts";
 import { uploadSalesRoute } from "./routes/upload-sales-route.ts";
 import { jwtPlugin } from "../lib/jwt.ts";
 import { loginRoute } from "./routes/login-route.ts";
+import { getSalesAdminRoute } from "./routes/get-sales-admin-route.ts";
 
 // Inicializa a aplicação Fastify com suporte ao Zod para validação de tipos
 const app = fastify().withTypeProvider<ZodTypeProvider>();
@@ -38,6 +39,8 @@ app.register(loginRoute);
 app.register(calculePlanRoute);
 app.register(createSaleRoute);
 app.register(uploadSalesRoute);
+
+app.register(getSalesAdminRoute);
 
 // Inicia o servidor
 app.listen({ port: env.PORT }).then(() => {
