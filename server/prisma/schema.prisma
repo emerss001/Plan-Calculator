@@ -33,12 +33,7 @@ model Sale {
   planId      String
   createdAt   DateTime @default(now())
   gamer       Boolean  @default(false)
-  phones      Int
-  computers   Int
-  smartTvs    Int
-  tvBox       Int
-  others      Int
-  weightTotal Float
+  totalDevices Int
 
   client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
   plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)

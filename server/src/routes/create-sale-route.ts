@@ -32,6 +32,8 @@ export const createSaleRoute: FastifyPluginAsyncZod = async (app) => {
                 throw new Error("Plano não encontrado");
             }
 
+            const totalDevices = devices.computers + devices.phones + devices.smartTvs + devices.tvBox + devices.others;
+
             // criar nova venda do cliente caso ele já exista
             if (clientExists) {
                 await db.sale.create({
@@ -39,12 +41,7 @@ export const createSaleRoute: FastifyPluginAsyncZod = async (app) => {
                         clientId: clientExists.id,
                         planId: planId,
                         gamer: devices.gamer,
-                        phones: devices.phones,
-                        computers: devices.computers,
-                        smartTvs: devices.smartTvs,
-                        tvBox: devices.tvBox,
-                        others: devices.others,
-                        weightTotal: weightTotal,
+                        totalDevices: totalDevices,
                     },
                 });
 
@@ -79,12 +76,7 @@ export const createSaleRoute: FastifyPluginAsyncZod = async (app) => {
                     clientId: newClient.id,
                     planId: planId,
                     gamer: devices.gamer,
-                    phones: devices.phones,
-                    computers: devices.computers,
-                    smartTvs: devices.smartTvs,
-                    tvBox: devices.tvBox,
-                    others: devices.others,
-                    weightTotal: weightTotal,
+                    totalDevices,
                 },
             });
 
