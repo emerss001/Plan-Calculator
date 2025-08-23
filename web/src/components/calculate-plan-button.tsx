@@ -11,6 +11,7 @@ import {
 } from "./ui/alert-dialog";
 import { useGetRecommendedPlan } from "../http/use-get-recommended-plan";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface RecommendedPlan {
     devices: {
@@ -38,6 +39,14 @@ const CalculatePlanButton = ({ devices, gamer }: RecommendedPlan) => {
         });
         if (result) setIsOpen(true);
     }
+
+    const detailsPlanSubscription = {
+        id: data?.planRecommended.id,
+        name: data?.planRecommended.name,
+        speed: data?.planRecommended.speed_mbps,
+        price: data?.planRecommended.price,
+        totalDevices: devices.computers + devices.phones + devices.smartTvs + devices.tvBoxes + devices.others,
+    };
 
     return (
         <div className="pt-4">
@@ -89,12 +98,14 @@ const CalculatePlanButton = ({ devices, gamer }: RecommendedPlan) => {
 
                     <AlertDialogFooter>
                         <div className="flex flex-col w-full space-y-2">
-                            <Button
-                                variant="secondary"
-                                className="text-white font-bold p-5 text-lg rounded-xl shadow-lg hover:bg-accent/90"
-                            >
-                                Contratar Agora
-                            </Button>
+                            <Link to="/subscribe" state={detailsPlanSubscription} className="w-full">
+                                <Button
+                                    variant="secondary"
+                                    className="text-white font-bold p-5 text-lg w-full rounded-xl shadow-lg hover:bg-accent/90"
+                                >
+                                    Contratar Agora
+                                </Button>
+                            </Link>
 
                             <AlertDialogCancel className="text-white font-bold p-5 border-none text-lg rounded-xl shadow-lg hover:bg-accent/90">
                                 Cancelar

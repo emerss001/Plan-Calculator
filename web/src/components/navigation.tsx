@@ -3,10 +3,10 @@ import { Button } from "./ui/button";
 import { Calculator, Shield } from "lucide-react";
 
 interface NavigationProps {
-    currentPage: "home" | "admin";
+    currentPage?: "home" | "admin";
 }
 
-const Navigation = ({ currentPage }: NavigationProps) => {
+const Navigation = ({ currentPage = "home" }: NavigationProps) => {
     return (
         <nav className="bg-white border-b border-gray-200 px-4 py-3">
             <div className="container mx-auto flex items-center justify-between">
