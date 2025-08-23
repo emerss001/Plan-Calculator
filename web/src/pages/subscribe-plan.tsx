@@ -7,19 +7,31 @@ import type { SubscriberFormData } from "../components/subscriber/subscriber-for
 import PlanSummary from "../components/subscriber/plan-ummary";
 import SubscriberForm from "../components/subscriber/subscriber-form";
 import ConfirmationDialog from "../components/subscriber/confirmation-dialog";
+import { useCreateSale, type CreateSaleRequest } from "../http/use-create-sale";
 
-// Mantenha a interface aqui ou mova para um arquivo de tipos global
 interface DetailsPlanSubscription {
-    id: string;
-    name: string;
-    speed: number;
-    price: number;
-    totalDevices: number;
+    detailsPlanSubscription: {
+        weightTotal: number;
+        id: string;
+        name: string;
+        speed: number;
+        price: number;
+        totalDevices: number;
+    };
+    devices: {
+        phones: number;
+        computers: number;
+        smartTvs: number;
+        tvBoxes: number;
+        others: number;
+    };
+    gamer: boolean;
 }
 
 const SubscriberPlanPage = () => {
     const location = useLocation();
-    const planDetails = location.state as DetailsPlanSubscription;
+    const { detailsPlanSubscription: planDetails, devices, gamer } = location.state as DetailsPlanSubscription;
+    const { mutate: createSale } = useCreateSale();
 
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
     const [formData, setFormData] = useState<SubscriberFormData | null>(null);
@@ -28,24 +40,42 @@ const SubscriberPlanPage = () => {
         return <Navigate to="/" />;
     }
 
-    // Função chamada quando o formulário é submetido com sucesso
     function handleFormSubmit(data: SubscriberFormData) {
-        setFormData(data); // Salva os dados do formulário no estado
-        setShowConfirmDialog(true); // Abre o diálogo de confirmação
+        setFormData(data);
+        setShowConfirmDialog(true);
     }
 
-    // Função chamada quando o usuário clica em "Salvar Contrato" no diálogo
     function handleConfirmContract() {
-        if (!formData) return;
+        if (!formData || !planDetails) return;
 
-        console.log("Contrato confirmado com os seguintes dados:");
-        console.log("Plano:", planDetails);
-        console.log("Cliente:", formData);
+        const dataRequest: CreateSaleRequest = {
+            name: formData.name,
+            telephone: formData.phone,
+            email: formData.email,
+            planId: planDetails.id,
+            weightTotal: planDetails.weightTotal,
+            devices: {
+                computers: devices.computers,
+                phones: devices.phones,
+                smartTvs: devices.smartTvs,
+                tvBox: devices.tvBoxes,
+                others: devices.others,
+                gamer,
+            },
+        };
 
-        // Aqui você faria a chamada para sua API para salvar o contrato
+        createSale(dataRequest, {
+            onSuccess: (data) => {
+                console.log("Venda criada com sucesso!", data);
+                setShowConfirmDialog(false);
+                return <Navigate to={`/sale-resume/${data.id}`} />;
+            },
+            onError: (err) => {
+                console.error("Ocorreu um erro:", err);
+            },
+        });
 
         setShowConfirmDialog(false);
-        // Ex: navigate("/contrato/sucesso");
     }
 
     return (

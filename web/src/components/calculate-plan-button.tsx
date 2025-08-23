@@ -41,6 +41,7 @@ const CalculatePlanButton = ({ devices, gamer }: RecommendedPlan) => {
     }
 
     const detailsPlanSubscription = {
+        weightTotal: data?.weightTotal,
         id: data?.planRecommended.id,
         name: data?.planRecommended.name,
         speed: data?.planRecommended.speed_mbps,
@@ -98,7 +99,11 @@ const CalculatePlanButton = ({ devices, gamer }: RecommendedPlan) => {
 
                     <AlertDialogFooter>
                         <div className="flex flex-col w-full space-y-2">
-                            <Link to="/subscribe" state={detailsPlanSubscription} className="w-full">
+                            <Link
+                                to="/subscribe"
+                                state={{ detailsPlanSubscription, devices, gamer }}
+                                className="w-full"
+                            >
                                 <Button
                                     variant="secondary"
                                     className="text-white font-bold p-5 text-lg w-full rounded-xl shadow-lg hover:bg-accent/90"
