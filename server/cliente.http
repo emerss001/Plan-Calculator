@@ -61,3 +61,9 @@ Content-Type: multipart/form-data
 GET {{baseUrl}}/admin/vendas
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ4MjNmZjVhLTMxYjEtNGViZC1iZmUwLTFhZTc2ZmJiNDhhMCIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTU3MDA5NDEsImV4cCI6MTc1NTcwNDU0MX0.ssTRLD41-qaVH4AnP_LOvE4ZzfvKnVa8sRfaitJzvG0
 Content-Type: application/json
+
+### 
+
+GET {{baseUrl}}/sale/78477868-56a2-4971-b4a4-5d136913992b
+Content-Type: application/json
+
