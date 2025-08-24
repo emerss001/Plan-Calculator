@@ -32,25 +32,26 @@ POST {{baseUrl}}/criar-venda
 Content-Type: application/json
 
 {
-  "nome": "Fabiano",
+  "name": "Fabiano",
   "email": "emerson.nascimento@example.com",
-  "telefone": "77981111111",
-  "planoId": "a52d6c43-01e6-4d89-b10d-96c2e77b0162",
-  "pesoTotal": 5.5,
-  "dispositivos": {
-    "celulares": 2,
-    "computadores": 3,
+  "telephone": "77981111111",
+  "planId": "2c59d287-baed-4e2a-81aa-dbaf336a9d51",
+  "weightTotal": 5.5,
+  "devices": {
+    "phones": 2,
+    "computers": 3,
     "smartTvs": 1,
     "tvBox": 4,
-    "outros": 2,
+    "others": 2,
     "gamer": true
   }
 }
 
 ###
 
-POST {{baseUrl}}/upload-vendas
+POST {{baseUrl}}/admin/upload-vendas
 Content-Type: multipart/form-data
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQwMzAwZTA5LWYyMjktNDg3MC1iNDUxLTc5YmUwMjk1NTcxYSIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTYwNzQzNTgsImV4cCI6MTc1NjA3Nzk1OH0.vVJ3ngi5175grvYp-LNIiUqSgivrtNVihMHYJwquXRc
 
 {
   "file": "../dados_fake_clientes_opcional.xlsx"
@@ -59,7 +60,7 @@ Content-Type: multipart/form-data
 ###
 
 GET {{baseUrl}}/admin/vendas
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ4MjNmZjVhLTMxYjEtNGViZC1iZmUwLTFhZTc2ZmJiNDhhMCIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTU3MDA5NDEsImV4cCI6MTc1NTcwNDU0MX0.ssTRLD41-qaVH4AnP_LOvE4ZzfvKnVa8sRfaitJzvG0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQwMzAwZTA5LWYyMjktNDg3MC1iNDUxLTc5YmUwMjk1NTcxYSIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTYwNjM0NjksImV4cCI6MTc1NjA2NzA2OX0.kubO--Zuc75JosmPlg_gtJ6MRQzIiGCUhzqdLISHmeY
 Content-Type: application/json
 
 ### 

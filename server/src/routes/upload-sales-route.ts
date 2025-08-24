@@ -7,7 +7,7 @@ import db from "../../lib/prisma-cliente.ts";
 import { calculeOfPlan } from "../../utils/calculate-weight-of-plan.ts";
 
 export const uploadSalesRoute: FastifyPluginAsyncZod = async (app) => {
-    app.post("/upload-vendas", { onRequest: [(app as any).authenticate] }, async (request, reply) => {
+    app.post("/admin/upload-vendas", { onRequest: [(app as any).authenticate] }, async (request, reply) => {
         try {
             const file = await request.file();
 
@@ -28,7 +28,7 @@ export const uploadSalesRoute: FastifyPluginAsyncZod = async (app) => {
 
             let processedRows = 0;
             const errors: string[] = [];
-            for (const rawRow of jsonData.entries()) {
+            for (const rawRow of jsonData) {
                 try {
                     // Validar e transformar os dados
                     const validatedRow = excelRowSchema.parse(rawRow);
@@ -71,17 +71,19 @@ export const uploadSalesRoute: FastifyPluginAsyncZod = async (app) => {
 
                     if (!cliente) return reply.status(400).send({ error: "Cliente não encontrado ou criado" });
 
+                    const totalDevices =
+                        validatedRow.Computadores +
+                        validatedRow.Celulares +
+                        validatedRow["Smart TV"] +
+                        validatedRow["Tv box"] +
+                        validatedRow["Outros dispositivos"];
+
                     await db.sale.create({
                         data: {
                             clientId: cliente.id,
                             planId: planRecommended.id,
                             gamer: validatedRow["Cliente Gamer"],
-                            phones: validatedRow.Celulares,
-                            computers: validatedRow.Computadores,
-                            smartTvs: validatedRow["Smart TV"],
-                            tvBox: validatedRow["Tv box"],
-                            others: validatedRow["Outros dispositivos"],
-                            weightTotal: weightTotalCalculated,
+                            totalDevices: totalDevices,
                         },
                     });
 

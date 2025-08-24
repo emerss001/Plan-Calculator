@@ -121,6 +121,8 @@ async function main() {
     for (const sale of sales) {
         const clientsIndex = sales.indexOf(sale);
         const weightTotalCalculated = calculeOfPlan(sale);
+        const totalDevices = sale.computers + sale.phones + sale.smartTvs + sale.tvBox + sale.others;
+
         const planRecommendedId = await db.plan.findFirst({
             where: {
                 weightMin: { lte: weightTotalCalculated },
@@ -133,12 +135,7 @@ async function main() {
                 {
                     clientId: clients[clientsIndex > 1 ? 1 : 0].id,
                     planId: planRecommendedId?.id!,
-                    computers: sale.computers,
-                    phones: sale.phones,
-                    smartTvs: sale.smartTvs,
-                    tvBox: sale.tvBox,
-                    others: sale.others,
-                    weightTotal: weightTotalCalculated,
+                    totalDevices,
                 },
             ],
         });
