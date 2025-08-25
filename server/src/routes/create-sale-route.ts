@@ -11,7 +11,7 @@ export const createSaleRoute: FastifyPluginAsyncZod = async (app) => {
                 body: createSaleRequest,
             },
         },
-        async (request) => {
+        async (request, reply) => {
             const { devices, email, name, planId, telephone, weightTotal } = request.body;
 
             // 1. Verificando se o cliente já existe
@@ -36,7 +36,7 @@ export const createSaleRoute: FastifyPluginAsyncZod = async (app) => {
 
             // criar nova venda do cliente caso ele já exista
             if (clientExists) {
-                await db.sale.create({
+                const saleCreated = await db.sale.create({
                     data: {
                         clientId: clientExists.id,
                         planId: planId,
@@ -59,7 +59,7 @@ export const createSaleRoute: FastifyPluginAsyncZod = async (app) => {
                     plan: planOfClient.name,
                 });
 
-                return { status: "Venda criada com sucesso" };
+                return reply.send({ id: saleCreated.id });
             }
 
             // 3. Criando um novo cliente e uma nova venda caso o cliente não exista
@@ -71,7 +71,7 @@ export const createSaleRoute: FastifyPluginAsyncZod = async (app) => {
                 },
             });
 
-            await db.sale.create({
+            const saleCreated = await db.sale.create({
                 data: {
                     clientId: newClient.id,
                     planId: planId,
@@ -94,7 +94,7 @@ export const createSaleRoute: FastifyPluginAsyncZod = async (app) => {
                 plan: planOfClient.name,
             });
 
-            return { status: "Venda criada com sucesso" };
+            return reply.send({ id: saleCreated.id });
         }
     );
 };
