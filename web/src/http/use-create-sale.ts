@@ -19,8 +19,6 @@ export interface CreateSaleRequest {
 
 export interface CreateSaleResponse {
     id: string;
-    status: string;
-    message: string;
 }
 
 export function useCreateSale() {

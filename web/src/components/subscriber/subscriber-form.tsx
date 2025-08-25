@@ -18,9 +18,10 @@ export type SubscriberFormData = z.infer<typeof formSchema>;
 
 interface SubscriberFormProps {
     onSubmit: (data: SubscriberFormData) => void;
+    isPending: boolean;
 }
 
-const SubscriberForm = ({ onSubmit }: SubscriberFormProps) => {
+const SubscriberForm = ({ onSubmit, isPending }: SubscriberFormProps) => {
     const navigate = useNavigate();
     const form = useForm<SubscriberFormData>({
         resolver: zodResolver(formSchema),
@@ -86,8 +87,12 @@ const SubscriberForm = ({ onSubmit }: SubscriberFormProps) => {
                     <Button type="button" variant="ghost" onClick={() => navigate(-1)} className="flex-1">
                         Voltar
                     </Button>
-                    <Button type="submit" className="flex-1 bg-gradient-to-r from-primary to-accent">
-                        Contratar
+                    <Button
+                        disabled={isPending}
+                        type="submit"
+                        className="flex-1 bg-gradient-to-r from-primary to-accent"
+                    >
+                        {isPending ? "Salvando..." : "Contratar"}
                     </Button>
                 </div>
             </form>

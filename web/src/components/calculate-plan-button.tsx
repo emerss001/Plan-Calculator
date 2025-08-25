@@ -12,6 +12,7 @@ import {
 import { useGetRecommendedPlan } from "../http/use-get-recommended-plan";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 interface RecommendedPlan {
     devices: {
@@ -29,6 +30,12 @@ const CalculatePlanButton = ({ devices, gamer }: RecommendedPlan) => {
     const { mutateAsync: getPlan, data, isPending } = useGetRecommendedPlan();
 
     async function handleGetPlan() {
+        const totalDevices = devices.computers + devices.phones + devices.smartTvs + devices.tvBoxes + devices.others;
+        if (totalDevices === 0) {
+            toast.error("Adicione pelo menos um dispositivo para calcular o plano ideal.");
+            return null;
+        }
+
         const result = await getPlan({
             computers: devices.computers,
             phones: devices.phones,

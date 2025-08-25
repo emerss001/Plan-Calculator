@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FileText } from "lucide-react";
 import Navigation from "../components/navigation";
 import { Card, CardContent } from "../components/ui/card";
@@ -29,15 +29,16 @@ interface DetailsPlanSubscription {
 }
 
 const SubscriberPlanPage = () => {
+    const router = useNavigate();
     const location = useLocation();
     const { detailsPlanSubscription: planDetails, devices, gamer } = location.state as DetailsPlanSubscription;
-    const { mutate: createSale } = useCreateSale();
+    const { mutate: createSale, isPending } = useCreateSale();
 
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
     const [formData, setFormData] = useState<SubscriberFormData | null>(null);
 
     if (!planDetails) {
-        return <Navigate to="/" />;
+        router("/");
     }
 
     function handleFormSubmit(data: SubscriberFormData) {
@@ -46,7 +47,7 @@ const SubscriberPlanPage = () => {
     }
 
     function handleConfirmContract() {
-        if (!formData || !planDetails) return;
+        if (!formData || !planDetails) return null;
 
         const dataRequest: CreateSaleRequest = {
             name: formData.name,
@@ -66,9 +67,9 @@ const SubscriberPlanPage = () => {
 
         createSale(dataRequest, {
             onSuccess: (data) => {
-                console.log("Venda criada com sucesso!", data);
                 setShowConfirmDialog(false);
-                return <Navigate to={`/sale-resume/${data.id}`} />;
+                console.log(data);
+                return router(`/sale-resume/${data.id}`);
             },
             onError: (err) => {
                 console.error("Ocorreu um erro:", err);
@@ -94,7 +95,7 @@ const SubscriberPlanPage = () => {
                     <Card className="shadow-xl">
                         <CardContent className="p-8">
                             <PlanSummary plan={planDetails} />
-                            <SubscriberForm onSubmit={handleFormSubmit} />
+                            <SubscriberForm onSubmit={handleFormSubmit} isPending={isPending} />
                         </CardContent>
                     </Card>
                 </div>
