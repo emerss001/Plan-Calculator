@@ -35,7 +35,7 @@ Content-Type: application/json
   "name": "Fabiano",
   "email": "emerson.nascimento@example.com",
   "telephone": "77981111111",
-  "planId": "2c59d287-baed-4e2a-81aa-dbaf336a9d51",
+  "planId": "639b0494-9c22-4c71-8b39-d10cbbee6ab8",
   "weightTotal": 5.5,
   "devices": {
     "phones": 2,
@@ -60,7 +60,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQwMzAwZTA5L
 ###
 
 GET {{baseUrl}}/admin/vendas
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQwMzAwZTA5LWYyMjktNDg3MC1iNDUxLTc5YmUwMjk1NTcxYSIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTYwNjM0NjksImV4cCI6MTc1NjA2NzA2OX0.kubO--Zuc75JosmPlg_gtJ6MRQzIiGCUhzqdLISHmeY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3NGQ4MmJhLWExOWUtNDI5ZC1iZWE2LWVhNmZjYjBkZDdjYyIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTYxNjI3NzcsImV4cCI6MTc1NjE2NjM3N30.TCvV11PYW9Q_u1dkD9YMoVJ_bn2vkF5zPNuBFlQQHCI
 Content-Type: application/json
 
 ### 
@@ -68,3 +68,7 @@ Content-Type: application/json
 GET {{baseUrl}}/sale/78477868-56a2-4971-b4a4-5d136913992b
 Content-Type: application/json
 
+###  
+
+GET {{baseUrl}}/admin/metrics
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3NGQ4MmJhLWExOWUtNDI5ZC1iZWE2LWVhNmZjYjBkZDdjYyIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTYxNjYwNTUsImV4cCI6MTc1NjE2OTY1NX0.ZMkLiMDplBrQIlMom7I_vWb5K-cx_c4n6ccaXHAzLvs

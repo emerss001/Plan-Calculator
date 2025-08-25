@@ -10,6 +10,7 @@ import { jwtPlugin } from "../lib/jwt.ts";
 import { loginRoute } from "./routes/login-route.ts";
 import { getSalesAdminRoute } from "./routes/get-sales-admin-route.ts";
 import { getSaleDetails } from "./routes/get-sale-details.ts";
+import { getMetricsAdmin } from "./routes/get-metrics-admin.ts";
 
 // Inicializa a aplicação Fastify com suporte ao Zod para validação de tipos
 const app = fastify().withTypeProvider<ZodTypeProvider>();
@@ -43,6 +44,7 @@ app.register(uploadSalesRoute);
 app.register(getSaleDetails);
 
 app.register(getSalesAdminRoute);
+app.register(getMetricsAdmin);
 
 // Inicia o servidor
 app.listen({ port: env.PORT }).then(() => {
