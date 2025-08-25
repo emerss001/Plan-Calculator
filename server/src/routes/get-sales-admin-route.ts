@@ -10,6 +10,9 @@ export const getSalesAdminRoute: FastifyPluginAsyncZod = async (app) => {
                 email: true,
                 telephone: true,
                 Sale: {
+                    orderBy: {
+                        createdAt: "desc",
+                    },
                     select: {
                         id: true,
                         createdAt: true,
