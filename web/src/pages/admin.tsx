@@ -5,12 +5,22 @@ import Navigation from "../components/navigation";
 import SalesTable from "../components/admin/sales-table";
 import { useGetSalesClients } from "../http/use-get-sales-clients";
 import ExcelUploadModal from "../components/admin/excel-upload-modal";
+import { useGetMetrics } from "../http/use-get-metrics";
+import { useNavigate } from "react-router-dom";
 
 const AdminPage = () => {
+    const router = useNavigate();
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+        router("/login");
+    }
+
     const [searchTerm, setSearchTerm] = useState("");
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
     const { data } = useGetSalesClients();
+    const { data: metricsData } = useGetMetrics();
 
     return (
         <>
@@ -35,7 +45,8 @@ const AdminPage = () => {
                             />
                         </div>
                     </div>
-                    <SalesMetrics totalSales={50} confirmedSales={20} todaySales={7} totalDevices={8} />
+
+                    {metricsData && <SalesMetrics {...metricsData} />}
 
                     {data ? (
                         <SalesTable

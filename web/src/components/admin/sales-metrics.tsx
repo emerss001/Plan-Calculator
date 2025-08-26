@@ -1,14 +1,8 @@
 import { BarChart3, Monitor, ShoppingCart } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
+import type { getMetricsResponse } from "../../http/use-get-metrics";
 
-interface SalesMetricsProps {
-    totalSales: number;
-    todaySales: number;
-    totalDevices: number;
-    confirmedSales: number;
-}
-
-const SalesMetrics = ({ todaySales, totalSales, totalDevices, confirmedSales }: SalesMetricsProps) => {
+const SalesMetrics = ({ todaySales, totalSales, totalDevices }: getMetricsResponse) => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <Card>
@@ -52,7 +46,7 @@ const SalesMetrics = ({ todaySales, totalSales, totalDevices, confirmedSales }: 
                     <div className="flex items-center justify-between">
                         <div>
                             <p className="text-sm text-gray-600 mb-1">Vendas efetivadas</p>
-                            <p className="text-2xl font-bold">{confirmedSales}</p>
+                            <p className="text-2xl font-bold">{1}</p>
                         </div>
                         <BarChart3 className="w-8 h-8 text-orange-600" />
                     </div>

@@ -2,9 +2,16 @@ import { Calculator, LogOut, ShoppingCart, Users } from "lucide-react";
 import SidebarItem from "./sidebar-item";
 import { useState } from "react";
 import { Button } from "../ui/button";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
     const [activeTab, setActiveTab] = useState("vendas");
+    const router = useNavigate();
+
+    const onLogout = () => {
+        localStorage.removeItem("token");
+        router("/");
+    };
 
     return (
         <div className="w-64 bg-white border-r border-gray-200 p-6">
@@ -33,7 +40,7 @@ const Sidebar = () => {
             <div className="mt-auto pt-8 w-full">
                 <Button
                     variant="outline"
-                    //   onClick={onLogout}
+                    onClick={onLogout}
                     className="flex items-center gap-2 text-red-600 border-red-200 w-full"
                 >
                     <LogOut className="w-4 h-4" />
