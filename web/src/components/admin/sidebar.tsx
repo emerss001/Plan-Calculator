@@ -1,11 +1,14 @@
-import { Calculator, LogOut, ShoppingCart, Users } from "lucide-react";
+import { Calculator, LogOut, ShoppingCart, UserCheck, Users } from "lucide-react";
 import SidebarItem from "./sales/sidebar-item";
-import { useState } from "react";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 
-const Sidebar = () => {
-    const [activeTab, setActiveTab] = useState("vendas");
+interface SidebarProps {
+    activeTab: string;
+    setActiveTab: (tab: string) => void;
+}
+
+const Sidebar = ({ activeTab, setActiveTab }: SidebarProps) => {
     const router = useNavigate();
 
     const onLogout = () => {
@@ -34,6 +37,13 @@ const Sidebar = () => {
                     label="Vendas"
                     isActive={activeTab === "vendas"}
                     onClick={() => setActiveTab("vendas")}
+                />
+
+                <SidebarItem
+                    Icon={UserCheck}
+                    label="Confirmar Venda"
+                    isActive={activeTab === "confirmar"}
+                    onClick={() => setActiveTab("confirmar")}
                 />
             </nav>
 

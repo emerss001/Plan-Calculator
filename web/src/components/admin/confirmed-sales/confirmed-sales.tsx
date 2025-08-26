@@ -1,4 +1,16 @@
+import { useState } from "react";
+import { useGetSalesFiltered } from "../../../http/use-get-sales-filtereds";
+import FormDatas from "./form-datas";
+import SalesTableFiltered from "./sales-table-filtered";
+
 const ConfirmedSales = () => {
+    const [filters, setFilters] = useState({
+        name: "",
+        email: "",
+        telephone: "",
+    });
+    const { mutate, data: salesFiltered } = useGetSalesFiltered();
+
     return (
         <div className="flex-1 p-4 md:p-8 min-w-0">
             <div className="flex items-center justify-between mb-8">
@@ -15,6 +27,11 @@ const ConfirmedSales = () => {
                         className="h-12 w-auto"
                     />
                 </div>
+            </div>
+
+            <div className="space-y-6">
+                <FormDatas filters={filters} setFilters={setFilters} mutate={mutate} />
+                {salesFiltered && <SalesTableFiltered data={salesFiltered} />}
             </div>
         </div>
     );

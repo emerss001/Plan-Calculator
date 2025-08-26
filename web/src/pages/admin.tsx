@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../components/admin/sidebar";
 import Navigation from "../components/navigation";
 import { useGetSalesClients } from "../http/use-get-sales-clients";
@@ -11,6 +11,8 @@ import ConfirmedSales from "../components/admin/confirmed-sales/confirmed-sales"
 
 const AdminPage = () => {
     const navigate = useNavigate();
+
+    const [activeTab, setActiveTab] = useState("vendas");
 
     const { data, refetch: refetchSales } = useGetSalesClients();
     const { data: metricsData, refetch: refetchMetrics } = useGetMetrics();
@@ -31,10 +33,10 @@ const AdminPage = () => {
             <Navigation currentPage="admin" />
 
             <div className="min-h-screen bg-gray-50 flex overflow-x-hidden">
-                <Sidebar />
+                <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-                {/* <Sales metricsData={metricsData!} salesClients={data!} /> */}
-                <ConfirmedSales />
+                {activeTab === "vendas" && <Sales metricsData={metricsData!} salesClients={data!} />}
+                {activeTab === "confirmar" && <ConfirmedSales />}
             </div>
         </>
     );
