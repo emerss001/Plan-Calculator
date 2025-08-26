@@ -8,8 +8,9 @@ import { Input } from "../components/ui/input";
 import { Eye, EyeOff, Lock, User } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { useState } from "react";
-import { useLogin, type LoginError } from "../http/use-login";
+import { useLogin } from "../http/use-login";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 const formSchema = z.object({
     username: z.string().min(3, "O nome de usuário deve ter no mínimo 3 caracteres"),
@@ -20,6 +21,7 @@ type LoginFormData = z.infer<typeof formSchema>;
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -40,9 +42,11 @@ const LoginPage = () => {
         mutate(data, {
             onSuccess: (response) => {
                 localStorage.setItem("token", response.token);
+
+                queryClient.invalidateQueries({ queryKey: ["get-sales-clients", "get-metrics"] });
                 navigate("/admin");
             },
-            onError: (error: LoginError) => {
+            onError: (error) => {
                 setError(error.message);
             },
             onSettled: () => {

@@ -27,7 +27,7 @@ export const loginRoute: FastifyPluginAsyncZod = async (app) => {
 
             // 2. Validar senha
             if (!(await bcrypt.compare(password, user.password))) {
-                return reply.code(401).send({ error: "Credenciais inválidas" });
+                return reply.code(401).send({ message: "Credenciais inválidas" });
             }
 
             // 3. Gerar token JWT

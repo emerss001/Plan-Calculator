@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SalesMetrics from "../components/admin/sales-metrics";
 import Sidebar from "../components/admin/sidebar";
 import Navigation from "../components/navigation";
@@ -7,16 +7,37 @@ import { useGetSalesClients } from "../http/use-get-sales-clients";
 import ExcelUploadModal from "../components/admin/excel-upload-modal";
 import { useGetMetrics } from "../http/use-get-metrics";
 import { isTokenValid } from "../lib/jwt-decoded";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const AdminPage = () => {
-    const token = localStorage.getItem("token");
-    if (!token || !isTokenValid(token)) window.location.replace("/login");
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token || !isTokenValid(token)) {
+            toast.error("Sessão expirada. Faça login novamente.");
+            navigate("/login"); // useNavigate do react-router
+        }
+    }, []);
 
     const [searchTerm, setSearchTerm] = useState("");
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
     const { data } = useGetSalesClients();
     const { data: metricsData } = useGetMetrics();
+
+    const filteredSales = useMemo(() => {
+        if (!data) return [];
+
+        return data.filter(
+            (item) =>
+                item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                item.telephone.includes(searchTerm) ||
+                item.Sale.some((sale) => sale.plan?.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        );
+    }, [data, searchTerm]);
 
     return (
         <>
@@ -48,7 +69,7 @@ const AdminPage = () => {
                         <SalesTable
                             searchTerm={searchTerm}
                             setSearchTerm={setSearchTerm}
-                            salesItem={data}
+                            salesItem={filteredSales}
                             setIsUploadModalOpen={setIsUploadModalOpen}
                         />
                     ) : (
