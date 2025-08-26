@@ -1,10 +1,10 @@
 import { CheckCircle, FileSpreadsheet, Upload } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../../ui/dialog";
 import { useState } from "react";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { Button } from "../ui/button";
-import { useUploadFile } from "../../http/use-upload-exel";
+import { Input } from "../../ui/input";
+import { Label } from "../../ui/label";
+import { Button } from "../../ui/button";
+import { useUploadFile } from "../../../http/use-upload-exel";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface ExcelUploadModalProps {

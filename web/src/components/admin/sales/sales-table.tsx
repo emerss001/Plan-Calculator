@@ -1,11 +1,11 @@
 import { Monitor, Search, Users, Upload } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
-import { Input } from "../ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
-import type { GetSalesClientesResponse } from "../../http/use-get-sales-clients";
-import { Badge } from "../ui/badge";
-import { Collapsible, CollapsibleContent } from "../ui/collapsible";
-import { Button } from "../ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
+import { Input } from "../../ui/input";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table";
+import type { GetSalesClientesResponse } from "../../../http/use-get-sales-clients";
+import { Badge } from "../../ui/badge";
+import { Collapsible, CollapsibleContent } from "../../ui/collapsible";
+import { Button } from "../../ui/button";
 import { useState } from "react";
 
 interface SalesTable {

@@ -1,5 +1,5 @@
 import { Calculator, LogOut, ShoppingCart, Users } from "lucide-react";
-import SidebarItem from "./sidebar-item";
+import SidebarItem from "./sales/sidebar-item";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
