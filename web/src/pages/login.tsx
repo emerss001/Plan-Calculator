@@ -43,7 +43,9 @@ const LoginPage = () => {
             onSuccess: (response) => {
                 localStorage.setItem("token", response.token);
 
-                queryClient.invalidateQueries({ queryKey: ["get-sales-clients", "get-metrics"] });
+                queryClient.invalidateQueries({ queryKey: ["get-sales-clients"] });
+                queryClient.invalidateQueries({ queryKey: ["get-metrics"] });
+
                 navigate("/admin");
             },
             onError: (error) => {

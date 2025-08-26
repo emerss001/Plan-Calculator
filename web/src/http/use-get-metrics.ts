@@ -1,16 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 
-export interface getMetricsResponse {
+export interface GetMetricsResponse {
     totalSales: number;
     todaySales: number;
     totalDevices: number;
 }
 
 export function useGetMetrics() {
-    return useQuery({
+    const token = localStorage.getItem("token");
+
+    return useQuery<GetMetricsResponse>({
         queryKey: ["get-metrics"],
         queryFn: async () => {
-            const token = localStorage.getItem("token");
+            if (!token) throw new Error("Token não encontrado");
+
             const response = await fetch(`http://localhost:3000/admin/metrics`, {
                 method: "GET",
                 headers: {
@@ -18,9 +21,16 @@ export function useGetMetrics() {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            const result: getMetricsResponse = await response.json();
 
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Erro ao buscar métricas");
+            }
+
+            const result: GetMetricsResponse = await response.json();
             return result;
         },
+        enabled: !!token,
+        retry: false,
     });
 }

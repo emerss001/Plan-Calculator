@@ -15,7 +15,7 @@ export interface LoginError {
 }
 
 export function useLogin() {
-    return useMutation({
+    return useMutation<LoginResponse, Error, LoginRequest>({
         mutationKey: ["login"],
         mutationFn: async (data: LoginRequest) => {
             const response = await fetch(`${urlBase}/login`, {
@@ -27,8 +27,8 @@ export function useLogin() {
             });
 
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error);
+                const errorData: LoginError = await response.json();
+                throw new Error(errorData.message);
             }
 
             const result: LoginResponse = await response.json();

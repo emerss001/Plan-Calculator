@@ -20,10 +20,12 @@ export interface GetSalesClientesResponse {
 }
 
 export function useGetSalesClients() {
+    const token = localStorage.getItem("token");
     return useQuery({
         queryKey: ["get-sales-clients"],
         queryFn: async () => {
-            const token = localStorage.getItem("token");
+            if (!token) throw new Error("Token não encontrado");
+
             const response = await fetch(`${urlBase}/admin/vendas`, {
                 method: "GET",
                 headers: {
@@ -35,5 +37,7 @@ export function useGetSalesClients() {
 
             return result;
         },
+        enabled: !!token,
+        retry: false,
     });
 }

@@ -13,19 +13,22 @@ import { useNavigate } from "react-router-dom";
 const AdminPage = () => {
     const navigate = useNavigate();
 
+    const { data, refetch: refetchSales } = useGetSalesClients();
+    const { data: metricsData, refetch: refetchMetrics } = useGetMetrics();
+
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (!token || !isTokenValid(token)) {
             toast.error("Sessão expirada. Faça login novamente.");
-            navigate("/login"); // useNavigate do react-router
+            navigate("/login");
+        } else {
+            refetchSales();
+            refetchMetrics();
         }
     }, []);
 
     const [searchTerm, setSearchTerm] = useState("");
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
-
-    const { data } = useGetSalesClients();
-    const { data: metricsData } = useGetMetrics();
 
     const filteredSales = useMemo(() => {
         if (!data) return [];
