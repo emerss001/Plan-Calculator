@@ -1,6 +1,6 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import db from "../../lib/prisma-cliente.ts";
-import { sendEmailClient } from "../../lib/resend-email.ts";
+import { sendEmailAdmin, sendEmailClient } from "../../lib/resend-email.ts";
 import { createSaleRequest } from "../../types/create-sale-request.ts";
 
 export const createSaleRoute: FastifyPluginAsyncZod = async (app) => {
@@ -45,18 +45,36 @@ export const createSaleRoute: FastifyPluginAsyncZod = async (app) => {
                     },
                 });
 
-                await sendEmailClient({
-                    nameClient: clientExists.name,
-                    telephoneClient: clientExists.telephone,
-                    devices: [
-                        { deviceName: "Celulares", deviceWeight: devices.phones },
-                        { deviceName: "Computadores", deviceWeight: devices.computers },
-                        { deviceName: "Smart TVs", deviceWeight: devices.smartTvs },
-                        { deviceName: "TV Box", deviceWeight: devices.tvBox },
-                        { deviceName: "Outros", deviceWeight: devices.others },
-                    ],
-                    weightTotal: weightTotal,
-                    plan: planOfClient.name,
+                setImmediate(() => {
+                    sendEmailClient({
+                        nameClient: clientExists.name,
+                        telephoneClient: clientExists.telephone,
+                        emailClient: clientExists.email,
+                        devices: [
+                            { deviceName: "Celulares", deviceWeight: devices.phones },
+                            { deviceName: "Computadores", deviceWeight: devices.computers },
+                            { deviceName: "Smart TVs", deviceWeight: devices.smartTvs },
+                            { deviceName: "TV Box", deviceWeight: devices.tvBox },
+                            { deviceName: "Outros", deviceWeight: devices.others },
+                        ],
+                        weightTotal: weightTotal,
+                        plan: planOfClient.name,
+                    }).catch((err) => console.error("Erro ao enviar email cliente:", err));
+
+                    sendEmailAdmin({
+                        nameClient: clientExists.name,
+                        telephoneClient: clientExists.telephone,
+                        emailClient: clientExists.email,
+                        devices: [
+                            { deviceName: "Celulares", deviceWeight: devices.phones },
+                            { deviceName: "Computadores", deviceWeight: devices.computers },
+                            { deviceName: "Smart TVs", deviceWeight: devices.smartTvs },
+                            { deviceName: "TV Box", deviceWeight: devices.tvBox },
+                            { deviceName: "Outros", deviceWeight: devices.others },
+                        ],
+                        weightTotal: weightTotal,
+                        plan: planOfClient.name,
+                    }).catch((err) => console.error("Erro ao enviar email admin:", err));
                 });
 
                 return reply.send({ id: saleCreated.id });
@@ -80,18 +98,36 @@ export const createSaleRoute: FastifyPluginAsyncZod = async (app) => {
                 },
             });
 
-            await sendEmailClient({
-                nameClient: newClient.name,
-                telephoneClient: newClient.telephone,
-                devices: [
-                    { deviceName: "Celulares", deviceWeight: devices.phones },
-                    { deviceName: "Computadores", deviceWeight: devices.computers },
-                    { deviceName: "Smart TVs", deviceWeight: devices.smartTvs },
-                    { deviceName: "TV Box", deviceWeight: devices.tvBox },
-                    { deviceName: "Outros", deviceWeight: devices.others },
-                ],
-                weightTotal: weightTotal,
-                plan: planOfClient.name,
+            setImmediate(() => {
+                sendEmailClient({
+                    nameClient: newClient.name,
+                    telephoneClient: newClient.telephone,
+                    emailClient: newClient.email,
+                    devices: [
+                        { deviceName: "Celulares", deviceWeight: devices.phones },
+                        { deviceName: "Computadores", deviceWeight: devices.computers },
+                        { deviceName: "Smart TVs", deviceWeight: devices.smartTvs },
+                        { deviceName: "TV Box", deviceWeight: devices.tvBox },
+                        { deviceName: "Outros", deviceWeight: devices.others },
+                    ],
+                    weightTotal: weightTotal,
+                    plan: planOfClient.name,
+                }).catch((err) => console.error("Erro ao enviar email cliente:", err));
+
+                sendEmailAdmin({
+                    nameClient: newClient.name,
+                    telephoneClient: newClient.telephone,
+                    emailClient: newClient.email,
+                    devices: [
+                        { deviceName: "Celulares", deviceWeight: devices.phones },
+                        { deviceName: "Computadores", deviceWeight: devices.computers },
+                        { deviceName: "Smart TVs", deviceWeight: devices.smartTvs },
+                        { deviceName: "TV Box", deviceWeight: devices.tvBox },
+                        { deviceName: "Outros", deviceWeight: devices.others },
+                    ],
+                    weightTotal: weightTotal,
+                    plan: planOfClient.name,
+                }).catch((err) => console.error("Erro ao enviar email admin:", err));
             });
 
             return reply.send({ id: saleCreated.id });
