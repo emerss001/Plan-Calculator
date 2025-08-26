@@ -75,12 +75,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3NGQ4MmJhL
 
 ###   
 
-POST {{baseUrl}}/admin/get-sales-clients
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk5MDgxOGRjLTk3OGYtNDBhOC1hZmIwLTE3YmQwZmVkMDZmMiIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTYyNDEzNTAsImV4cCI6MTc1NjI0NDk1MH0.3r2e-v-8odB1flNMaI7531kP1Si-cJWWghq-h40aPhg
+POST {{baseUrl}}/admin/get-sales-filtered
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk5MDgxOGRjLTk3OGYtNDBhOC1hZmIwLTE3YmQwZmVkMDZmMiIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTYyNDUwOTgsImV4cCI6MTc1NjI0ODY5OH0.cp29JcVrhjSYGaQ02s2DCl-AxgzrK_m-A80SzJC42rs
 Content-Type: application/json
 
 {
-  "name": "Fabiano",
-  "email": "luiz",
-  "telephone": "77981111111"
+  "name": "fern",
+  "email": "",
+  "telephone": ""
 }
