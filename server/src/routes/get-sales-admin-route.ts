@@ -4,6 +4,9 @@ import db from "../../lib/prisma-cliente.ts";
 export const getSalesAdminRoute: FastifyPluginAsyncZod = async (app) => {
     app.get("/admin/vendas", { onRequest: [(app as any).authenticate] }, async (request, reply) => {
         const clientsWithSales = await db.client.findMany({
+            orderBy: {
+                lastSaleDate: "desc",
+            },
             select: {
                 id: true,
                 name: true,
@@ -27,6 +30,8 @@ export const getSalesAdminRoute: FastifyPluginAsyncZod = async (app) => {
                 },
             },
         });
+
+        console.log(clientsWithSales.map((client) => client.Sale).flat());
 
         return clientsWithSales;
     });

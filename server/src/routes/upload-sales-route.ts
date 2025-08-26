@@ -65,6 +65,7 @@ export const uploadSalesRoute: FastifyPluginAsyncZod = async (app) => {
                                 name: validatedRow.nome,
                                 email: validatedRow["E-mail"],
                                 telephone: validatedRow.telefone || "",
+                                lastSaleDate: new Date(),
                             },
                         });
                     }
@@ -85,6 +86,11 @@ export const uploadSalesRoute: FastifyPluginAsyncZod = async (app) => {
                             gamer: validatedRow["Cliente Gamer"],
                             totalDevices: totalDevices,
                         },
+                    });
+
+                    await db.client.update({
+                        where: { id: cliente.id },
+                        data: { lastSaleDate: new Date() },
                     });
 
                     processedRows++;

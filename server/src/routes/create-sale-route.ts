@@ -45,6 +45,11 @@ export const createSaleRoute: FastifyPluginAsyncZod = async (app) => {
                     },
                 });
 
+                await db.client.update({
+                    where: { id: clientExists.id },
+                    data: { lastSaleDate: new Date() },
+                });
+
                 setImmediate(() => {
                     sendEmailClient({
                         nameClient: clientExists.name,
@@ -86,6 +91,7 @@ export const createSaleRoute: FastifyPluginAsyncZod = async (app) => {
                     name,
                     email,
                     telephone,
+                    lastSaleDate: new Date(),
                 },
             });
 

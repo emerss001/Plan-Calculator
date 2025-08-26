@@ -12,6 +12,7 @@ model Client {
   name      String
   email     String @unique
   telephone String @unique
+  lastSaleDate DateTime?
 
   Sale Sale[]
 }

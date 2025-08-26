@@ -68,11 +68,13 @@ async function main() {
                 name: "João Pereira Silva",
                 email: "joaopepe@gmail.com",
                 telephone: "77981818181",
+                lastSaleDate: new Date(),
             },
             {
                 name: "Mariana Souza Neves",
                 email: "Mari.neves@outlook.com",
                 telephone: "77998523014",
+                lastSaleDate: new Date(),
             },
         ],
     });
