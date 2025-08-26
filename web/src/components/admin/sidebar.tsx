@@ -14,7 +14,7 @@ const Sidebar = () => {
     };
 
     return (
-        <div className="w-64 bg-white border-r border-gray-200 p-6">
+        <div className="w-50 bg-white border-r border-gray-200 p-6">
             <div className="flex items-center gap-2 mb-8">
                 <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
                     <Users className="w-4 h-4 text-white" />
