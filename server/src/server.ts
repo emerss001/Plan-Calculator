@@ -11,6 +11,7 @@ import { loginRoute } from "./routes/login-route.ts";
 import { getSalesAdminRoute } from "./routes/get-sales-admin-route.ts";
 import { getSaleDetails } from "./routes/get-sale-details.ts";
 import { getMetricsAdmin } from "./routes/get-metrics-admin.ts";
+import { getSalesClientRoute } from "./routes/get-sales-client-route.ts";
 
 // Inicializa a aplicação Fastify com suporte ao Zod para validação de tipos
 const app = fastify().withTypeProvider<ZodTypeProvider>();
@@ -45,6 +46,7 @@ app.register(getSaleDetails);
 
 app.register(getSalesAdminRoute);
 app.register(getMetricsAdmin);
+app.register(getSalesClientRoute);
 
 // Inicia o servidor
 app.listen({ port: env.PORT }).then(() => {

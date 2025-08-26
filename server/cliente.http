@@ -72,3 +72,15 @@ Content-Type: application/json
 
 GET {{baseUrl}}/admin/metrics
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3NGQ4MmJhLWExOWUtNDI5ZC1iZWE2LWVhNmZjYjBkZDdjYyIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTYxNjYwNTUsImV4cCI6MTc1NjE2OTY1NX0.ZMkLiMDplBrQIlMom7I_vWb5K-cx_c4n6ccaXHAzLvs
+
+###   
+
+POST {{baseUrl}}/admin/get-sales-clients
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk5MDgxOGRjLTk3OGYtNDBhOC1hZmIwLTE3YmQwZmVkMDZmMiIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTYyNDEzNTAsImV4cCI6MTc1NjI0NDk1MH0.3r2e-v-8odB1flNMaI7531kP1Si-cJWWghq-h40aPhg
+Content-Type: application/json
+
+{
+  "name": "Fabiano",
+  "email": "luiz",
+  "telephone": "77981111111"
+}
