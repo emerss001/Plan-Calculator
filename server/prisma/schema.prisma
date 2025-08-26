@@ -35,6 +35,7 @@ model Sale {
   createdAt   DateTime @default(now())
   gamer       Boolean  @default(false)
   totalDevices Int
+  confirmed   Boolean  @default(false)
 
   client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
   plan   Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)

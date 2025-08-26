@@ -7,6 +7,13 @@ export const getSalesAdminRoute: FastifyPluginAsyncZod = async (app) => {
             orderBy: {
                 lastSaleDate: "desc",
             },
+            where: {
+                Sale: {
+                    every: {
+                        confirmed: false,
+                    },
+                },
+            },
             select: {
                 id: true,
                 name: true,
