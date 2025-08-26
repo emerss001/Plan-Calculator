@@ -6,15 +6,11 @@ import SalesTable from "../components/admin/sales-table";
 import { useGetSalesClients } from "../http/use-get-sales-clients";
 import ExcelUploadModal from "../components/admin/excel-upload-modal";
 import { useGetMetrics } from "../http/use-get-metrics";
-import { useNavigate } from "react-router-dom";
+import { isTokenValid } from "../lib/jwt-decoded";
 
 const AdminPage = () => {
-    const router = useNavigate();
-
     const token = localStorage.getItem("token");
-    if (!token) {
-        router("/login");
-    }
+    if (!token || !isTokenValid(token)) window.location.replace("/login");
 
     const [searchTerm, setSearchTerm] = useState("");
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
