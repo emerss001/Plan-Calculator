@@ -8,7 +8,7 @@ export const getMetricsAdmin: FastifyPluginAsyncZod = async (app) => {
         const tomorrow = new Date(today);
         tomorrow.setDate(tomorrow.getDate() + 1);
 
-        const [totalSales, todaySales, devicesAggregate] = await db.$transaction([
+        const [totalSales, todaySales, confirmedSales, devicesAggregate] = await db.$transaction([
             db.sale.count(),
             db.sale.count({
                 where: {
@@ -16,6 +16,11 @@ export const getMetricsAdmin: FastifyPluginAsyncZod = async (app) => {
                         gte: today,
                         lt: tomorrow,
                     },
+                },
+            }),
+            db.sale.count({
+                where: {
+                    confirmed: true,
                 },
             }),
             db.sale.aggregate({
@@ -28,6 +33,7 @@ export const getMetricsAdmin: FastifyPluginAsyncZod = async (app) => {
         return {
             totalSales,
             todaySales,
+            confirmedSales,
             totalDevices: devicesAggregate._sum.totalDevices || 0,
         };
     });

@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 export interface GetMetricsResponse {
     totalSales: number;
     todaySales: number;
+    confirmedSales: number;
     totalDevices: number;
 }
 
