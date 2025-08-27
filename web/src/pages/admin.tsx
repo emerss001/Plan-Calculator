@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Sidebar from "../components/admin/sidebar";
 import Navigation from "../components/navigation";
 import { useGetSalesClients } from "../http/use-get-sales-clients";
@@ -11,6 +11,7 @@ import ConfirmedSales from "../components/admin/confirmed-sales/confirmed-sales"
 
 const AdminPage = () => {
     const navigate = useNavigate();
+    const hasCheckedAuth = useRef(false);
 
     const [activeTab, setActiveTab] = useState("vendas");
 
@@ -18,6 +19,9 @@ const AdminPage = () => {
     const { data: metricsData, refetch: refetchMetrics } = useGetMetrics();
 
     useEffect(() => {
+        if (hasCheckedAuth.current) return;
+        hasCheckedAuth.current = true;
+
         const token = localStorage.getItem("token");
         if (!token || !isTokenValid(token)) {
             toast.error("Sessão expirada. Faça login novamente.");
@@ -26,7 +30,7 @@ const AdminPage = () => {
             refetchSales();
             refetchMetrics();
         }
-    }, []);
+    }, [navigate, refetchMetrics, refetchSales]);
 
     return (
         <>

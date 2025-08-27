@@ -32,6 +32,5 @@ export function useGetMetrics() {
             return result;
         },
         enabled: !!token,
-        retry: false,
     });
 }
