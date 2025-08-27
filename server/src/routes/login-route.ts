@@ -1,7 +1,8 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
-import db from "../../lib/prisma-cliente.ts";
+import db from "../lib/prisma-cliente.ts";
 import bcrypt from "bcrypt";
+import { ClientError } from "../erros/client-error.ts";
 
 export const loginRoute: FastifyPluginAsyncZod = async (app) => {
     app.post(
@@ -23,11 +24,13 @@ export const loginRoute: FastifyPluginAsyncZod = async (app) => {
                     username,
                 },
             });
-            if (!user) return reply.code(401).send({ error: "Credenciais inválidas" });
+            if (!user) {
+                throw new ClientError("Credenciais inválidas", 401);
+            }
 
             // 2. Validar senha
             if (!(await bcrypt.compare(password, user.password))) {
-                return reply.code(401).send({ message: "Credenciais inválidas" });
+                throw new ClientError("Credenciais inválidas", 401);
             }
 
             // 3. Gerar token JWT

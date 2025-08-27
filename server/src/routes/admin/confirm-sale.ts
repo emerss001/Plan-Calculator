@@ -1,6 +1,7 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
-import db from "../../../lib/prisma-cliente.ts";
+import db from "../../lib/prisma-cliente.ts";
+import { ClientError } from "../../erros/client-error.ts";
 
 export const confirmSaleRoute: FastifyPluginAsyncZod = async (app) => {
     app.post(
@@ -15,14 +16,13 @@ export const confirmSaleRoute: FastifyPluginAsyncZod = async (app) => {
         },
         async (request, reply) => {
             const { saleId } = request.params;
-            console.log(saleId);
 
             const sale = await db.sale.findUnique({
                 where: { id: saleId },
             });
 
             if (!sale) {
-                return reply.status(404).send({ message: "Sale not found" });
+                throw new ClientError("Sale not found", 404);
             }
 
             await db.sale.update({

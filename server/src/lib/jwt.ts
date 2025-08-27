@@ -1,6 +1,7 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import jwt from "@fastify/jwt";
-import { env } from "../src/env.ts";
+import { env } from "../env.ts";
+import { ClientError } from "../erros/client-error.ts";
 
 export const jwtPlugin = async (app: FastifyInstance) => {
     app.register(jwt, { secret: env.JWT_SECRET });
@@ -9,7 +10,7 @@ export const jwtPlugin = async (app: FastifyInstance) => {
         try {
             await request.jwtVerify();
         } catch (err) {
-            reply.code(401).send({ error: "Token inválido ou ausente" });
+            throw new ClientError("Token inválido ou ausente", 401);
         }
     });
 };

@@ -1,7 +1,7 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import db from "../../lib/prisma-cliente.ts";
-import { CalculePlanRequest } from "../../types/calculate-plan-request.ts";
-import { calculeOfPlan } from "../../utils/calculate-weight-of-plan.ts";
+import db from "../lib/prisma-cliente.ts";
+import { CalculePlanRequest } from "../types/calculate-plan-request.ts";
+import { calculeOfPlan } from "../utils/calculate-weight-of-plan.ts";
 
 export const calculePlanRoute: FastifyPluginAsyncZod = async (app) => {
     app.post(

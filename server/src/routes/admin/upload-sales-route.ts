@@ -2,9 +2,9 @@ import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import {} from "@fastify/multipart";
 import z from "zod";
 import XLSX from "xlsx";
-import { excelRowSchema } from "../../../types/excel-row-schema.ts";
-import db from "../../../lib/prisma-cliente.ts";
-import { calculeOfPlan } from "../../../utils/calculate-weight-of-plan.ts";
+import { excelRowSchema } from "../../types/excel-row-schema.ts";
+import db from "../../lib/prisma-cliente.ts";
+import { calculeOfPlan } from "../../utils/calculate-weight-of-plan.ts";
 
 export const uploadSalesRoute: FastifyPluginAsyncZod = async (app) => {
     app.post("/admin/upload-vendas", { onRequest: [(app as any).authenticate] }, async (request, reply) => {
@@ -111,7 +111,7 @@ export const uploadSalesRoute: FastifyPluginAsyncZod = async (app) => {
             });
         } catch (error) {
             console.error(error);
-            return { status: "Erro ao fazer upload do arquivo" };
+            return reply.status(500).send({ error: "Error processing file" });
         }
     });
 };

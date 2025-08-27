@@ -1,6 +1,6 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
-import db from "../../lib/prisma-cliente.ts";
+import db from "../lib/prisma-cliente.ts";
 
 export const getSaleDetails: FastifyPluginAsyncZod = async (app) => {
     app.get(

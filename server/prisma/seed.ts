@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
-import { calculeOfPlan } from "../utils/calculate-weight-of-plan.ts";
-import db from "../lib/prisma-cliente.ts";
-import { createHashPassword } from "../utils/create-hash-password.ts";
+import { calculeOfPlan } from "../src/utils/calculate-weight-of-plan.ts";
+import db from "../src/lib/prisma-cliente.ts";
+import { createHashPassword } from "../src/utils/create-hash-password.ts";
 
 const prisma = new PrismaClient();
 

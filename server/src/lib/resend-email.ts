@@ -1,7 +1,7 @@
 import { Resend } from "resend";
-import { env } from "../src/env.ts";
-import { returnEmailToClient } from "../src/emails/email-client.ts";
-import { returnEmailToAdmin } from "../src/emails/email-admin.ts";
+import { env } from "../env.ts";
+import { returnEmailToClient } from "../emails/email-client.ts";
+import { returnEmailToAdmin } from "../emails/email-admin.ts";
 
 interface EmailClintProps {
     nameClient: string;

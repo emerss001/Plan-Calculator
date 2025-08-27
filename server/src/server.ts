@@ -6,13 +6,14 @@ import { calculePlanRoute } from "./routes/calculate-plan-route.ts";
 import fastifyMultipart from "@fastify/multipart";
 import { createSaleRoute } from "./routes/create-sale-route.ts";
 import { uploadSalesRoute } from "./routes/admin/upload-sales-route.ts";
-import { jwtPlugin } from "../lib/jwt.ts";
+import { jwtPlugin } from "./lib/jwt.ts";
 import { loginRoute } from "./routes/login-route.ts";
 import { getSalesAdminRoute } from "./routes/admin/get-sales-admin-route.ts";
 import { getSaleDetails } from "./routes/get-sale-details.ts";
 import { getMetricsAdmin } from "./routes/admin/get-metrics-admin.ts";
 import { getSalesFilteredRoute } from "./routes/admin/get-sales-filtered-route.ts";
 import { confirmSaleRoute } from "./routes/admin/confirm-sale.ts";
+import { errorHandler } from "./error-handler.ts";
 
 // Inicializa a aplicação Fastify com suporte ao Zod para validação de tipos
 const app = fastify().withTypeProvider<ZodTypeProvider>();
@@ -32,6 +33,8 @@ app.register(fastifyMultipart);
 // Define os compiladores de validação e serialização usando Zod
 app.setSerializerCompiler(serializerCompiler);
 app.setValidatorCompiler(validatorCompiler);
+
+app.setErrorHandler(errorHandler);
 
 // Define a rota de verificação de saúde
 app.get("/health", async () => {

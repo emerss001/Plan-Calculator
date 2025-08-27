@@ -1,5 +1,5 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import db from "../../../lib/prisma-cliente.ts";
+import db from "../../lib/prisma-cliente.ts";
 
 export const getMetricsAdmin: FastifyPluginAsyncZod = async (app) => {
     app.get("/admin/metrics", { onRequest: [(app as any).authenticate] }, async (request, reply) => {

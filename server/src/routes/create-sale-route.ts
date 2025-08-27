@@ -1,7 +1,8 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import db from "../../lib/prisma-cliente.ts";
-import { sendEmailAdmin, sendEmailClient } from "../../lib/resend-email.ts";
-import { createSaleRequest } from "../../types/create-sale-request.ts";
+import db from "../lib/prisma-cliente.ts";
+import { sendEmailAdmin, sendEmailClient } from "../lib/resend-email.ts";
+import { createSaleRequest } from "../types/create-sale-request.ts";
+import { ClientError } from "../erros/client-error.ts";
 
 export const createSaleRoute: FastifyPluginAsyncZod = async (app) => {
     app.post(
@@ -29,7 +30,7 @@ export const createSaleRoute: FastifyPluginAsyncZod = async (app) => {
             });
 
             if (!planOfClient) {
-                throw new Error("Plano não encontrado");
+                throw new ClientError("Plan not found", 404);
             }
 
             const totalDevices = devices.computers + devices.phones + devices.smartTvs + devices.tvBox + devices.others;
