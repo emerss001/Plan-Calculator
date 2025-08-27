@@ -13,7 +13,7 @@ services:
         volumes:
             - ./server:/app
         restart: unless-stopped
-        command: sh -c "npx prisma generate && npx prisma migrate deploy && npm run seed && npm run dev"
+        command: sh -c "npx prisma generate && npx prisma migrate deploy && npm run seed && npm run docker"
 
     web:
         build: ./web
