@@ -59,7 +59,7 @@ const CalculatorPage = () => {
                     </div>
 
                     <div className="flex flex-col items-center justify-center">
-                        <Card className="border-border/50 shadow-xl max-w-3xl m-4">
+                        <Card className="border-border/50 shadow-xl max-w-3xl w-full m-4">
                             <CardHeader className="pb-6">
                                 <CardTitle className="text-2xl text-primary flex items-center gap-3">
                                     <Sparkles className="w-6 h-6 text-accent" />

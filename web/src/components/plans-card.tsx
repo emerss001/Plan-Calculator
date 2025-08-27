@@ -1,9 +1,9 @@
 const PlansCard = () => {
     const plans = [
         { name: "BRONZE", speed: "300Mb", price: 99.99, color: "bg-amber-600", description: "Ideal para uso básico" },
-        { name: "PRATA", speed: "500Mb", price: 149.99, color: "bg-gray-400", description: "Perfeito para famílias" },
-        { name: "OURO", speed: "750Mb", price: 199.99, color: "bg-yellow-500", description: "Para uso intensivo" },
-        { name: "DIAMANTE", speed: "1Gb", price: 299.99, color: "bg-blue-600", description: "Máxima velocidade" },
+        { name: "PRATA", speed: "100Mb", price: 149.99, color: "bg-gray-400", description: "Perfeito para famílias" },
+        { name: "OURO", speed: "500Mb", price: 199.99, color: "bg-yellow-500", description: "Para uso intensivo" },
+        { name: "DIAMANTE", speed: "800Mb", price: 299.99, color: "bg-blue-600", description: "Máxima velocidade" },
     ];
 
     return (

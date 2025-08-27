@@ -116,7 +116,7 @@ const ResumeSalePage = () => {
                                 <div className="p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border border-blue-200">
                                     <p className="text-blue-800 text-center text-sm">
                                         <strong>Próximos passos:</strong> Nossa equipe entrará em contato em até 24
-                                        horas para agendar a instalação.
+                                        horas para mais informações acerca da sua contratação.
                                     </p>
                                 </div>
                             </div>
