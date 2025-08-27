@@ -25,6 +25,7 @@ jwtPlugin(app);
 app.register(fastifyCors, {
     // origin: "http://localhost:3001",
     origin: "*",
+    credentials: false,
 });
 
 // Registra o plugin de upload de arquivos
@@ -54,6 +55,6 @@ app.register(getSalesFilteredRoute);
 app.register(confirmSaleRoute);
 
 // Inicia o servidor
-app.listen({ port: env.PORT }).then(() => {
+app.listen({ port: env.PORT, host: "0.0.0.0" }).then(() => {
     console.log("Servidor rodando na porta 3000!");
 });

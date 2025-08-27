@@ -32,6 +32,7 @@ const ExcelUploadModal = ({ isOpen, setIsUploadModalOpen }: ExcelUploadModalProp
             {
                 onSuccess: () => {
                     queryClient.invalidateQueries({ queryKey: ["get-sales-clients"] });
+                    queryClient.invalidateQueries({ queryKey: ["get-metrics"] });
                     setTimeout(() => {
                         setIsUploadModalOpen(false);
                     }, 1000);

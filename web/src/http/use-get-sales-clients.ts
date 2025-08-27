@@ -38,6 +38,5 @@ export function useGetSalesClients() {
             return result;
         },
         enabled: !!token,
-        retry: false,
     });
 }

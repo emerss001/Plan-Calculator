@@ -1,6 +1,5 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import {} from "@fastify/multipart";
-import z from "zod";
 import XLSX from "xlsx";
 import { excelRowSchema } from "../../types/excel-row-schema.ts";
 import db from "../../lib/prisma-cliente.ts";
