@@ -3,8 +3,6 @@ import { Button } from "../../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
-import type { UseMutateFunction } from "@tanstack/react-query";
-import type { SalesFilteredRequest, SalesFilteredResponse } from "../../../http/use-get-sales-filtereds";
 
 interface FormDatasProps {
     filters: {
@@ -13,12 +11,12 @@ interface FormDatasProps {
         telephone: string;
     };
     setFilters: (filters: FormDatasProps["filters"]) => void;
-    mutate: UseMutateFunction<SalesFilteredResponse[], Error, SalesFilteredRequest, unknown>;
+    onSearch: () => void;
 }
 
-const FormDatas = ({ filters, setFilters, mutate }: FormDatasProps) => {
+const FormDatas = ({ filters, setFilters, onSearch }: FormDatasProps) => {
     const handleSearchSales = () => {
-        mutate(filters);
+        onSearch();
     };
 
     return (

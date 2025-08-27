@@ -5,12 +5,29 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table";
 import { Badge } from "../../ui/badge";
 import { getPlanBadgeColor } from "../../../helpers/badge-colors";
+import { useConfirmSale } from "../../../http/use-confirm-sale";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 interface SalesTableFilteredProps {
     data: SalesFilteredResponse[];
 }
 
 const SalesTableFiltered = ({ data }: SalesTableFilteredProps) => {
+    const { mutate } = useConfirmSale();
+    const queryClient = useQueryClient();
+
+    const confirmSpecificSale = (saleId: string) => {
+        mutate(saleId, {
+            onSuccess: () => {
+                queryClient.invalidateQueries({ queryKey: ["salesFiltered"] });
+                queryClient.invalidateQueries({ queryKey: ["get-sales-clients"] });
+                queryClient.invalidateQueries({ queryKey: ["get-metrics"] });
+                toast.success("Venda confirmada com sucesso!");
+            },
+        });
+    };
+
     return (
         <Card>
             <CardHeader>
@@ -57,24 +74,13 @@ const SalesTableFiltered = ({ data }: SalesTableFilteredProps) => {
                                     </TableCell>
                                     <TableCell className="py-3 px-4">
                                         {!sale.confirmed ? (
-                                            <div className="flex space-x-2">
-                                                <Button
-                                                    // onClick={() => confirmSpecificSale(sale.id)}
-                                                    className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white"
-                                                >
-                                                    <Check className="w-4 h-4 mr-1" />
-                                                    Confirmar
-                                                </Button>
-
-                                                <Button
-                                                    variant="destructive"
-                                                    // onClick={() => confirmSpecificSale(sale.id)}
-                                                    className=" text-white"
-                                                >
-                                                    <Check className="w-4 h-4 mr-1" />
-                                                    Excluir
-                                                </Button>
-                                            </div>
+                                            <Button
+                                                onClick={() => confirmSpecificSale(sale.id)}
+                                                className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white"
+                                            >
+                                                <Check className="w-4 h-4 mr-1" />
+                                                Confirmar
+                                            </Button>
                                         ) : (
                                             <Badge className="bg-green-100 text-green-800">
                                                 <CheckCircle className="w-4 h-4 mr-1" />

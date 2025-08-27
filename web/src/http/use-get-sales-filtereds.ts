@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { urlBase } from "./url-base";
 
 export interface SalesFilteredResponse {
@@ -16,19 +16,18 @@ export interface SalesFilteredResponse {
 }
 
 export interface SalesFilteredRequest {
-    name: string;
-    email: string;
-    telephone: string;
+    name?: string;
+    email?: string;
+    telephone?: string;
 }
 
-export function useGetSalesFiltered() {
+export function useGetSalesFiltered(filters: SalesFilteredRequest) {
     const token = localStorage.getItem("token");
-
     if (!token) throw new Error("No token found");
 
-    return useMutation({
-        mutationKey: ["salesFiltered"],
-        mutationFn: async (filters: SalesFilteredRequest) => {
+    return useQuery({
+        queryKey: ["salesFiltered", filters],
+        queryFn: async () => {
             const response = await fetch(`${urlBase}/admin/get-sales-filtered`, {
                 method: "POST",
                 headers: {
@@ -37,6 +36,7 @@ export function useGetSalesFiltered() {
                 },
                 body: JSON.stringify(filters),
             });
+
             if (!response.ok) throw new Error("Failed to fetch sales");
             const result: SalesFilteredResponse[] = await response.json();
             return result;

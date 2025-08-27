@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useGetSalesFiltered } from "../../../http/use-get-sales-filtereds";
 import FormDatas from "./form-datas";
 import SalesTableFiltered from "./sales-table-filtered";
+import { useGetSalesFiltered } from "../../../http/use-get-sales-filtereds";
 
 const ConfirmedSales = () => {
     const [filters, setFilters] = useState({
@@ -9,7 +9,8 @@ const ConfirmedSales = () => {
         email: "",
         telephone: "",
     });
-    const { mutate, data: salesFiltered } = useGetSalesFiltered();
+
+    const { data: salesFiltered, refetch } = useGetSalesFiltered(filters);
 
     return (
         <div className="flex-1 p-4 md:p-8 min-w-0">
@@ -30,7 +31,7 @@ const ConfirmedSales = () => {
             </div>
 
             <div className="space-y-6">
-                <FormDatas filters={filters} setFilters={setFilters} mutate={mutate} />
+                <FormDatas filters={filters} setFilters={setFilters} onSearch={refetch} />
                 {salesFiltered && <SalesTableFiltered data={salesFiltered} />}
             </div>
         </div>
