@@ -5,13 +5,14 @@ import { env } from "./env.ts";
 import { calculePlanRoute } from "./routes/calculate-plan-route.ts";
 import fastifyMultipart from "@fastify/multipart";
 import { createSaleRoute } from "./routes/create-sale-route.ts";
-import { uploadSalesRoute } from "./routes/upload-sales-route.ts";
+import { uploadSalesRoute } from "./routes/admin/upload-sales-route.ts";
 import { jwtPlugin } from "../lib/jwt.ts";
 import { loginRoute } from "./routes/login-route.ts";
-import { getSalesAdminRoute } from "./routes/get-sales-admin-route.ts";
+import { getSalesAdminRoute } from "./routes/admin/get-sales-admin-route.ts";
 import { getSaleDetails } from "./routes/get-sale-details.ts";
-import { getMetricsAdmin } from "./routes/get-metrics-admin.ts";
-import { getSalesFilteredRoute } from "./routes/get-sales-filtered-route.ts";
+import { getMetricsAdmin } from "./routes/admin/get-metrics-admin.ts";
+import { getSalesFilteredRoute } from "./routes/admin/get-sales-filtered-route.ts";
+import { confirmSaleRoute } from "./routes/admin/confirm-sale.ts";
 
 // Inicializa a aplicação Fastify com suporte ao Zod para validação de tipos
 const app = fastify().withTypeProvider<ZodTypeProvider>();
@@ -47,6 +48,7 @@ app.register(getSaleDetails);
 app.register(getSalesAdminRoute);
 app.register(getMetricsAdmin);
 app.register(getSalesFilteredRoute);
+app.register(confirmSaleRoute);
 
 // Inicia o servidor
 app.listen({ port: env.PORT }).then(() => {

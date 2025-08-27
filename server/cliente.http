@@ -84,3 +84,9 @@ Content-Type: application/json
   "email": "",
   "telephone": ""
 }
+
+###   
+
+POST {{baseUrl}}/admin/confirm-sale/6c684de2-6375-4bb3-b23c-03a6363ef8a8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk5MDgxOGRjLTk3OGYtNDBhOC1hZmIwLTE3YmQwZmVkMDZmMiIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTYyNjI0NzgsImV4cCI6MTc1NjI2NjA3OH0.bvnLXEGNhqPBSFBvZAMa_dNF3A869IddTB_lnmApTzs
+
