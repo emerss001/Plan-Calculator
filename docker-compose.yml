@@ -8,6 +8,8 @@ services:
             - ./server/.env
         environment:
             - DATABASE_URL=postgresql://postgresql:postgresql_password@db:5432/plan_calculator
+            - RESEND_API_KEY=re_bscq6LWg_8QYkbRzvxdeYfF9rhPEfhjcn
+            - JWT_SECRET=mySuperSecretJWTKey
         depends_on:
             - db
         volumes:
