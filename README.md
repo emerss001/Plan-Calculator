@@ -90,6 +90,14 @@ Para executar o projeto basta ter o Docker instalado, toda parte de configuraç�
 
 -   Na raiz do projeto existe um arquivo `.xlsx`, ele pode ser usado para testar a funcionalidade de subir arquivos com vendas para o sistema.
 
+## Regras ne Negócio
+
+-   O cliente pode fazer vários cálculos de plano;
+
+-   Cada cliente pode ter mais de uma venda registrada com seus dados de contato;
+
+-   Ao confirmar uma venda, as demais relacionadas à aquele cliente são apagadas.
+
 ## Observações
 
 -   O backend expõe rotas para login, cálculo de plano, criação e upload de vendas, métricas administrativas, etc.
