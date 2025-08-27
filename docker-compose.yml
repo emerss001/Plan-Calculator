@@ -4,8 +4,6 @@ services:
         container_name: backend_app
         ports:
             - "3000:3000"
-        env_file:
-            - ./server/.env
         environment:
             - DATABASE_URL=postgresql://postgresql:postgresql_password@db:5432/plan_calculator
             - RESEND_API_KEY=re_bscq6LWg_8QYkbRzvxdeYfF9rhPEfhjcn
