@@ -104,6 +104,37 @@ Para executar o projeto basta ter o Docker instalado, toda parte de configuraç�
 -   O frontend possui páginas para login, recomendação de plano, cadastro de venda, dashboard administrativo e upload de vendas via Excel.
 -   O projeto está pronto para produção via Docker, mas pode ser executado localmente para desenvolvimento.
 
+## Testes com VS Code REST Client (server/cliente.http)
+
+Você pode testar rapidamente as rotas da API usando o arquivo `server/cliente.http` no VS Code.
+
+Pré-requisitos:
+
+-   Instalar a extensão “REST Client” no VS Code.
+-   Backend em execução em `http://localhost:3000`.
+
+Como usar:
+
+1. Abra o arquivo `server/cliente.http` no VS Code.
+2. Garanta que a variável de base esteja correta (por padrão `@baseUrl = http://localhost:3000`).
+3. Clique em “Send Request” acima de cada requisição.
+
+Fluxo sugerido de testes:
+
+-   Login (obter JWT):
+
+    ```http
+    POST {{baseUrl}}/login
+    Content-Type: application/json
+
+    {
+        "username": "admin",
+        "password": "desafio"
+    }
+    ```
+
+    Copie o `token` retornado para testar rotas administrativas.
+
 ---
 
 Para dúvidas, consulte os arquivos de cada pasta ou abra uma issue no repositório!

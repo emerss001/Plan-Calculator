@@ -23,7 +23,6 @@ jwtPlugin(app);
 
 // Configura o CORS permitindo acesso do frontend local
 app.register(fastifyCors, {
-    // origin: "http://localhost:3001",
     origin: "*",
     credentials: false,
 });

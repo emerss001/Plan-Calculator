@@ -1,7 +1,5 @@
 import { FastifyInstance } from "fastify";
 import { ClientError } from "./erros/client-error.ts";
-import { PrismaClientInitializationError } from "@prisma/client/runtime/binary";
-import { Prisma } from "@prisma/client";
 
 type FastifyErrorHandler = FastifyInstance["errorHandler"];
 

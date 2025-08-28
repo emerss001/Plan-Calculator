@@ -28,6 +28,7 @@ Content-Type: application/json
 
 ###
 
+## Criar uma nova venda
 POST {{baseUrl}}/criar-venda
 Content-Type: application/json
 
@@ -49,32 +50,26 @@ Content-Type: application/json
 
 ###
 
-POST {{baseUrl}}/admin/upload-vendas
-Content-Type: multipart/form-data
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQwMzAwZTA5LWYyMjktNDg3MC1iNDUxLTc5YmUwMjk1NTcxYSIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTYwNzQzNTgsImV4cCI6MTc1NjA3Nzk1OH0.vVJ3ngi5175grvYp-LNIiUqSgivrtNVihMHYJwquXRc
-
-{
-  "file": "../dados_fake_clientes_opcional.xlsx"
-}
-
-###
-
+## Buscar as vendas para a tela de admin
 GET {{baseUrl}}/admin/vendas
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ3NGQ4MmJhLWExOWUtNDI5ZC1iZWE2LWVhNmZjYjBkZDdjYyIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTYxNjI3NzcsImV4cCI6MTc1NjE2NjM3N30.TCvV11PYW9Q_u1dkD9YMoVJ_bn2vkF5zPNuBFlQQHCI
 Content-Type: application/json
 
 ### 
 
+## Busca detalhes de uma venda específica pelo seu id
 GET {{baseUrl}}/sale/78477868-56a2-4971-b4a4-5d136913992b
 Content-Type: application/json
 
 ###  
 
+## Busca métricas com base nas vendas
 GET {{baseUrl}}/admin/metrics
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk5MDgxOGRjLTk3OGYtNDBhOC1hZmIwLTE3YmQwZmVkMDZmMiIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTYyNjE1NjIsImV4cCI6MTc1NjI2NTE2Mn0.7tjVCWO2p8wGcAfYAdRckZfWHge9WaRxO-fGLzFvsu8
 
 ###   
 
+## Busca vendas filtradas por nome, email ou telefone
 POST {{baseUrl}}/admin/get-sales-filtered
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk5MDgxOGRjLTk3OGYtNDBhOC1hZmIwLTE3YmQwZmVkMDZmMiIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTYyNDUwOTgsImV4cCI6MTc1NjI0ODY5OH0.cp29JcVrhjSYGaQ02s2DCl-AxgzrK_m-A80SzJC42rs
 Content-Type: application/json
@@ -87,6 +82,7 @@ Content-Type: application/json
 
 ###   
 
+## Rota de confirmação de vendas
 POST {{baseUrl}}/admin/confirm-sale/6c684de2-6375-4bb3-b23c-03a6363ef8a7
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk5MDgxOGRjLTk3OGYtNDBhOC1hZmIwLTE3YmQwZmVkMDZmMiIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NTYzMDI0ODUsImV4cCI6MTc1NjMwNjA4NX0.Ns0uIRCIsLDD4SuXxx8L-olBZHX52l3fHyAhOoe6pZc
 
