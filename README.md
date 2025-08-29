@@ -86,6 +86,8 @@ Para executar o projeto basta ter o Docker instalado, toda parte de configuraç�
     - Backend: http://localhost:3000
     - Frontend: http://localhost:5173
 
+Na próxima vez que for executar o sistema, pode ser usado apenas o comando `docker compose up`.
+
 #### Testar upload de arquivo
 
 -   Na raiz do projeto existe um arquivo `.xlsx`, ele pode ser usado para testar a funcionalidade de subir arquivos com vendas para o sistema.

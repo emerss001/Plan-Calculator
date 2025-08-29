@@ -16,11 +16,12 @@ interface EmailClintProps {
 }
 
 const resend = new Resend(env.RESEND_API_KEY);
+const ADMINEMAIL = "operacoes@micks.com.br";
 
 export async function sendEmailClient(props: EmailClintProps) {
     const { data, error } = await resend.emails.send({
         from: "Micks Fibra <onboarding@resend.dev>",
-        to: ["emerson.dev.gbi@gmail.com", props.emailClient],
+        to: [props.emailClient],
         subject: "Contratação de Plano de Internet",
         html: returnEmailToClient(props),
     });
@@ -33,7 +34,7 @@ export async function sendEmailClient(props: EmailClintProps) {
 export async function sendEmailAdmin(props: EmailClintProps) {
     const { data, error } = await resend.emails.send({
         from: "Micks Fibra <onboarding@resend.dev>",
-        to: ["emerson.dev.gbi@gmail.com"],
+        to: [ADMINEMAIL],
         subject: "Contratação de Plano de Internet",
         html: returnEmailToAdmin(props),
     });
@@ -41,6 +42,4 @@ export async function sendEmailAdmin(props: EmailClintProps) {
     if (error) {
         return console.error({ error });
     }
-
-    console.log({ data });
 }

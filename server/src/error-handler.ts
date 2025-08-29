@@ -4,10 +4,7 @@ import { ClientError } from "./erros/client-error.ts";
 type FastifyErrorHandler = FastifyInstance["errorHandler"];
 
 export const errorHandler: FastifyErrorHandler = (error, request, reply) => {
-    console.log(error);
-
     if (error.validation) {
-        console.log(error);
         return reply.status(400).send({
             message: error.message,
         });

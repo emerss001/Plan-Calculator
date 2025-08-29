@@ -68,7 +68,6 @@ const SubscriberPlanPage = () => {
         createSale(dataRequest, {
             onSuccess: (data) => {
                 setShowConfirmDialog(false);
-                console.log(data);
                 return router(`/sale-resume/${data.id}`);
             },
             onError: (err) => {
