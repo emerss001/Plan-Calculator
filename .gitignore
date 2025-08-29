@@ -4,4 +4,3 @@ node_modules
 dist
 
 /generated/prisma
-dados_fake_clientes_opcional.xlsx
